@@ -1,5 +1,5 @@
 import {useQuery} from "@apollo/client";
-import {LIST_MOVIES} from "./gql";
+import {LIST_MOVIES} from "./graphql/gql";
 
 export default function Movies() {
     const { loading, error, data } = useQuery<ListMovies>(LIST_MOVIES);

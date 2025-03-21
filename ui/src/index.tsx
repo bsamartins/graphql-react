@@ -15,7 +15,7 @@ import {
 } from "@apollo/client";
 import {BatchHttpLink} from "@apollo/client/link/batch-http";
 import {onError} from "@apollo/client/link/error";
-import {client} from "./apollo";
+import {client} from "./graphql/apollo";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -1,5 +1,5 @@
 import {useQuery} from "@apollo/client";
-import {LIST_ACTORS, LIST_MOVIES} from "./gql";
+import {LIST_ACTORS, LIST_MOVIES} from "./graphql/gql";
 
 export default function Actors() {
     const { loading, error, data } = useQuery<ListActors>(LIST_ACTORS);
