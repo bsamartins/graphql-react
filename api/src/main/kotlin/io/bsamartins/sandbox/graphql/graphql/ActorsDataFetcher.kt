@@ -1,8 +1,10 @@
 package io.bsamartins.sandbox.graphql.graphql
 
-import com.netflix.dgs.codegen.generated.types.Actor
 import com.netflix.graphql.dgs.DgsComponent
 import com.netflix.graphql.dgs.DgsQuery
+import graphql.relay.Connection
+import graphql.schema.DataFetchingEnvironment
+import io.bsamartins.sandbox.graphql.codegen.types.Actor
 import io.bsamartins.sandbox.graphql.data.ActorService
 
 @DgsComponent
@@ -10,5 +12,5 @@ class ActorsDataFetcher(
     private val actorService: ActorService,
 ) {
     @DgsQuery
-    fun actors(): List<Actor> = actorService.listAll()
+    fun actors(env: DataFetchingEnvironment): Connection<Actor> = actorService.listAll().asConnection(env)
 }

@@ -1,14 +1,14 @@
 type Query {
-    movies: [Movie!]!
-    actors: [Actor!]!
+    movies: MovieConnection!
+    actors: ActorConnection!
 }
 
-type Movie {
+type Movie @connection {
   id: String!
   name: String!
 }
 
-type Actor {
+type Actor @connection {
   id: String!
   name: String!
 }
