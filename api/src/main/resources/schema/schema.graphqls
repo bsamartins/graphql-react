@@ -1,3 +1,8 @@
 type Query {
-    hello(message: String!): String!
+    movies: [Movie!]!
+}
+
+type Movie {
+  id: String!
+  name: String!
 }
