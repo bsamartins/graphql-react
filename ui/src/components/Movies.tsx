@@ -4,8 +4,8 @@ import {LIST_MOVIES} from "../graphql/gql";
 export default function Movies() {
     const { loading, error, data, fetchMore } = useQuery(LIST_MOVIES, {
         variables: {
-            first: 10,
-        }
+            first: 100,
+        },
     });
     if (loading) return <>'Loading...'</>;
     if (error) return <>`Error! ${error.message}`</>;
@@ -14,6 +14,13 @@ export default function Movies() {
         await fetchMore({
             variables: {
                 after: data?.movies?.pageInfo?.endCursor
+            },
+            updateQuery(previousResult, { fetchMoreResult }) {
+                if (!fetchMoreResult) {
+                    return previousResult;
+                }
+
+                return fetchMoreResult;
             }
         });
     }
