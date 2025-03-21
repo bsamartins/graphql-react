@@ -63,7 +63,7 @@ export const client = new ApolloClient({
             operation.getContext().batch !== false &&
             process.env.NODE_ENV !== 'test' &&
             sessionStorage.getItem('automatic-requests-batching') !== 'false',
-        from([typenameLink, errorLink, batchHttpLink]),
+        // from([typenameLink, errorLink, batchHttpLink]),
         from([typenameLink, errorLink, httpLink])
     ),
 });
