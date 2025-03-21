@@ -6,10 +6,10 @@ export default function Movies() {
 
     if (loading) return <>'Loading...'</>;
     if (error) return <>`Error! ${error.message}`</>;
-
+    console.log(data);
     return (
         <div>
-            {data?.data?.map((movie) => (
+            {data?.movies?.map((movie) => (
                 <div key={movie.id}>{movie.name}</div>
             ))}
         </div>
@@ -17,7 +17,7 @@ export default function Movies() {
 }
 
 interface ListMovies {
-    data: Movie[]
+    movies: Movie[]
 }
 
 interface Movie {
