@@ -1,12 +1,14 @@
 package io.bsamartins.sandbox.graphql.graphql
 
-import Movies
 import com.netflix.dgs.codegen.generated.types.Movie
 import com.netflix.graphql.dgs.DgsComponent
 import com.netflix.graphql.dgs.DgsQuery
+import io.bsamartins.sandbox.graphql.data.MovieService
 
 @DgsComponent
-class MoviesDataFetcher {
+class MoviesDataFetcher(
+    private val movieService: MovieService,
+) {
     @DgsQuery
-    fun movies(): List<Movie> = Movies.movies
+    fun movies(): List<Movie> = movieService.listAll()
 }

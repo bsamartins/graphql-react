@@ -1,12 +1,14 @@
 package io.bsamartins.sandbox.graphql.graphql
 
-import Actors
 import com.netflix.dgs.codegen.generated.types.Actor
 import com.netflix.graphql.dgs.DgsComponent
 import com.netflix.graphql.dgs.DgsQuery
+import io.bsamartins.sandbox.graphql.data.ActorService
 
 @DgsComponent
-class ActorsDataFetcher {
+class ActorsDataFetcher(
+    private val actorService: ActorService,
+) {
     @DgsQuery
-    fun actors(): List<Actor> = Actors.actors
+    fun actors(): List<Actor> = actorService.listAll()
 }
