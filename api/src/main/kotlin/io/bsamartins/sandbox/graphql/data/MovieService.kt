@@ -20,5 +20,5 @@ class MovieService(
         result
     }
 
-    fun listAll(): List<Movie> = movies.values.toList()
+    fun listAll(first: Int): List<Movie> = movies.values.toList().subList(0, first)
 }

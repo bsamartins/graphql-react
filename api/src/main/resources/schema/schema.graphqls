@@ -1,5 +1,5 @@
 type Query {
-    movies: MovieConnection!
+    movies(first: Int, last: Int, before: String, after: String): MovieConnection!
     actors: ActorConnection!
 }
 

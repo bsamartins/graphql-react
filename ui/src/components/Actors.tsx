@@ -10,7 +10,7 @@ export default function Actors() {
     console.log(data);
     return (
         <div>
-            {data?.actors?.map((actor) => (
+            {data?.actors?.edges?.map(edge => edge?.node!!).map((actor) => (
                 <div key={actor.id}>{actor.name}</div>
             ))}
         </div>

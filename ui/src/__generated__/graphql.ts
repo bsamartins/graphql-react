@@ -23,6 +23,24 @@ export type Actor = {
   name: Scalars['String']['output'];
 };
 
+/** Actor Connection */
+export type ActorConnection = {
+  __typename?: 'ActorConnection';
+  /** Field edges */
+  edges?: Maybe<Array<Maybe<ActorEdge>>>;
+  /** Field pageInfo */
+  pageInfo: PageInfo;
+};
+
+/** Actor Edge */
+export type ActorEdge = {
+  __typename?: 'ActorEdge';
+  /** Field cursor */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** Field node */
+  node?: Maybe<Actor>;
+};
+
 export enum ErrorDetail {
   /**
    * The deadline expired before the operation could complete.
@@ -268,11 +286,50 @@ export type Movie = {
   name: Scalars['String']['output'];
 };
 
+/** Movie Connection */
+export type MovieConnection = {
+  __typename?: 'MovieConnection';
+  /** Field edges */
+  edges?: Maybe<Array<Maybe<MovieEdge>>>;
+  /** Field pageInfo */
+  pageInfo: PageInfo;
+};
+
+/** Movie Edge */
+export type MovieEdge = {
+  __typename?: 'MovieEdge';
+  /** Field cursor */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** Field node */
+  node?: Maybe<Movie>;
+};
+
+/** PageInfo */
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  /** Field endCursor */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** Field hasNextPage */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** Field hasPreviousPage */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** Field startCursor */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   _service: _Service;
-  actors: Array<Actor>;
-  movies: Array<Movie>;
+  actors: ActorConnection;
+  movies: MovieConnection;
+};
+
+
+export type QueryMoviesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type _Service = {
@@ -283,13 +340,13 @@ export type _Service = {
 export type ListMoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListMoviesQuery = { __typename?: 'Query', movies: Array<{ __typename?: 'Movie', id: string, name: string }> };
+export type ListMoviesQuery = { __typename?: 'Query', movies: { __typename?: 'MovieConnection', edges?: Array<{ __typename?: 'MovieEdge', cursor?: string | null, node?: { __typename?: 'Movie', id: string, name: string } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 export type ListActorsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListActorsQuery = { __typename?: 'Query', actors: Array<{ __typename?: 'Actor', id: string, name: string }> };
+export type ListActorsQuery = { __typename?: 'Query', actors: { __typename?: 'ActorConnection', edges?: Array<{ __typename?: 'ActorEdge', cursor?: string | null, node?: { __typename?: 'Actor', id: string, name: string } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 
-export const ListMoviesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ListMovies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<ListMoviesQuery, ListMoviesQueryVariables>;
-export const ListActorsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ListActors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"actors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<ListActorsQuery, ListActorsQueryVariables>;
+export const ListMoviesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ListMovies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cursor"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"startCursor"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}}]}}]}}]}}]} as unknown as DocumentNode<ListMoviesQuery, ListMoviesQueryVariables>;
+export const ListActorsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ListActors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"actors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cursor"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"startCursor"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}}]}}]}}]}}]} as unknown as DocumentNode<ListActorsQuery, ListActorsQueryVariables>;

@@ -10,7 +10,7 @@ export default function Movies() {
     console.log(data);
     return (
         <div>
-            {data?.movies?.map((movie) => (
+            {data?.movies?.edges?.map(edge => edge?.node!!).map(movie => (
                 <div key={movie.id}>{movie.name}</div>
             ))}
         </div>
