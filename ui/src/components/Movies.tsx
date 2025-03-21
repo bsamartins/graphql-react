@@ -1,9 +1,12 @@
 import {useQuery} from "@apollo/client";
 import {LIST_MOVIES} from "../graphql/gql";
-import {ListMoviesQuery, QueryMoviesArgs} from "../__generated__/graphql";
 
 export default function Movies() {
-    const { loading, error, data, fetchMore } = useQuery<ListMoviesQuery, QueryMoviesArgs>(LIST_MOVIES);
+    const { loading, error, data, fetchMore } = useQuery(LIST_MOVIES, {
+        variables: {
+            first: 10,
+        }
+    });
     if (loading) return <>'Loading...'</>;
     if (error) return <>`Error! ${error.message}`</>;
     let hasNextPage = data?.movies?.pageInfo?.hasNextPage ?? false;

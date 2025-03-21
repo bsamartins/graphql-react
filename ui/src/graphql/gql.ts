@@ -1,8 +1,8 @@
 import {gql} from '../__generated__';
 
 export const LIST_MOVIES = gql(`
-  query ListMovies {
-    movies {
+  query ListMovies($first: Int) {
+    movies(first: $first) {
       edges {
         cursor
         node {

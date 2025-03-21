@@ -2,6 +2,7 @@ package io.bsamartins.sandbox.graphql.data
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.bsamartins.sandbox.graphql.codegen.types.Movie
+import io.bsamartins.sandbox.graphql.graphql.PageRequest
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Service
 import java.util.*
@@ -20,5 +21,5 @@ class MovieService(
         result
     }
 
-    fun listAll(first: Int): List<Movie> = movies.values.toList().subList(0, first)
+    fun listAll(pageRequest: PageRequest): List<Movie> = movies.values.toList().subList(0, pageRequest.first ?: 30)
 }

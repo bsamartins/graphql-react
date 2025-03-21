@@ -1,9 +1,8 @@
 import {useQuery} from "@apollo/client";
 import {LIST_ACTORS} from "../graphql/gql";
-import {ListActorsQuery, ListActorsQueryVariables} from "../__generated__/graphql";
 
 export default function Actors() {
-    const { loading, error, data } = useQuery<ListActorsQuery, ListActorsQueryVariables>(LIST_ACTORS);
+    const { loading, error, data } = useQuery(LIST_ACTORS);
 
     if (loading) return <>'Loading...'</>;
     if (error) return <>`Error! ${error.message}`</>;
