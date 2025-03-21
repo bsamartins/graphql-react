@@ -8,3 +8,12 @@ export const LIST_MOVIES = gql`
     }
   }
 `;
+
+export const LIST_ACTORS = gql`
+  query ListActors {
+    actors {
+      id
+      name
+    }
+  }
+`;
