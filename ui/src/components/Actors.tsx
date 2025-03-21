@@ -1,5 +1,5 @@
 import {useQuery} from "@apollo/client";
-import {LIST_ACTORS, LIST_MOVIES} from "../graphql/gql";
+import {LIST_ACTORS} from "../graphql/gql";
 import {ListActorsQuery, ListActorsQueryVariables} from "../__generated__/graphql";
 
 export default function Actors() {
@@ -15,13 +15,4 @@ export default function Actors() {
             ))}
         </div>
     );
-}
-
-interface ListActors {
-    actors: Actor[]
-}
-
-interface Actor {
-    id: string;
-    name: string;
 }
