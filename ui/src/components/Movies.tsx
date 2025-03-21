@@ -1,5 +1,6 @@
 import {useQuery} from "@apollo/client";
 import {LIST_MOVIES} from "../graphql/gql";
+import {MovieActor} from "./MovieActors";
 
 export default function Movies() {
     const { loading, error, data, fetchMore } = useQuery(LIST_MOVIES, {
@@ -29,7 +30,10 @@ export default function Movies() {
             <button onClick={onClick} disabled={!hasNextPage}>Next</button>
             <div>
                 {data?.movies?.edges?.map(edge => edge?.node!!).map(movie => (
-                    <div key={movie.id}>{movie.name}</div>
+                    <div>
+                        <div key={movie.id}>{movie.name}</div>
+                        <MovieActor actors={movie.actors}/>
+                    </div>
                 ))}
             </div>
         </div>

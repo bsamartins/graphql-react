@@ -8,6 +8,10 @@ export const LIST_MOVIES = gql(`
         node {
           id
           name
+          actors {
+            id
+            name
+          }
         }
       }
       pageInfo {
