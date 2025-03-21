@@ -1,8 +1,9 @@
 import {useQuery} from "@apollo/client";
-import {LIST_MOVIES} from "./graphql/gql";
+import {LIST_MOVIES} from "../graphql/gql";
+import {ListMoviesQuery, ListMoviesQueryVariables} from "../__generated__/graphql";
 
 export default function Movies() {
-    const { loading, error, data } = useQuery<ListMovies>(LIST_MOVIES);
+    const { loading, error, data } = useQuery<ListMoviesQuery, ListMoviesQueryVariables>(LIST_MOVIES);
 
     if (loading) return <>'Loading...'</>;
     if (error) return <>`Error! ${error.message}`</>;
@@ -14,13 +15,4 @@ export default function Movies() {
             ))}
         </div>
     );
-}
-
-interface ListMovies {
-    movies: Movie[]
-}
-
-interface Movie {
-    id: string;
-    name: string;
 }

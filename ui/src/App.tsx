@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import Movies from "./Movies";
-import Actors from "./Actors";
+import Movies from "./components/Movies";
+import Actors from "./components/Actors";
 
 function App() {
   return (
