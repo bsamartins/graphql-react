@@ -2,13 +2,30 @@ import {useQuery} from "@apollo/client";
 import {LIST_MOVIES} from "../graphql/gql";
 import {ListMoviesQuery} from "../__generated__/graphql";
 import CastMembers from "./CastMembers";
+import {useEffect, useState} from "react";
+import {useDebounce} from "use-debounce";
+import {useQueryParam} from "../hooks";
 
 export default function Movies() {
+    const [queryInput, setQueryInput] = useState<string>("");
+    const [queryDebounced] = useDebounce(queryInput, 500);
+    const [queryParam, setQueryParam] = useQueryParam("query");
+
     const { loading, error, data, fetchMore } = useQuery(LIST_MOVIES, {
         variables: {
             first: 10,
+            query: queryDebounced ? queryDebounced : null
         },
     });
+
+    useEffect(() => {
+        setQueryInput(queryParam ?? "");
+    }, []);
+
+    useEffect(() => {
+        setQueryParam(queryDebounced);
+    }, [queryDebounced]);
+
     if (loading) return <>'Loading...'</>;
     if (error) return <>`Error! ${error.message}`</>;
     let hasNextPage = data?.movies?.pageInfo?.hasNextPage ?? false;
@@ -32,8 +49,17 @@ export default function Movies() {
             updateQuery: (previousResult, { fetchMoreResult }) => replaceResults(previousResult, fetchMoreResult),
         });
     }
+
     return (
         <div>
+            <input
+                type="text"
+                value={queryInput}
+                onChange={(event) => {
+                    const value = event.target.value;
+                    setQueryInput(value);
+                }}
+            />
             <button onClick={onClickPreviousPage} disabled={!hasPreviousPage}>Previous</button>
             <button onClick={onClickNextPage} disabled={!hasNextPage}>Next</button>
             <div>
