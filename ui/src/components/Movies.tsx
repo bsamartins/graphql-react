@@ -12,19 +12,19 @@ export default function Movies() {
     const [queryInput, setQueryInput] = useState<string>("");
     const [queryDebounced] = useDebounce(queryInput, 500);
     const [queryParam, setQueryParam] = useQueryParam("query");
-    const [afterParam, setAfterParam] = useQueryParam("after");
-    const [beforeParam, setBeforeParam] = useQueryParam("before");
+    const [lastParam, setLastParam] = useQueryParam("last");
+    const [firstParam, setFirstParam] = useQueryParam("first");
 
     let queryParams: QueryMoviesArgs;
-    if (beforeParam) {
+    if (firstParam) {
         queryParams = {
             last: PAGE_SIZE,
-            before: beforeParam,
+            before: firstParam,
         };
     } else {
         queryParams = {
             first: PAGE_SIZE,
-            after: afterParam,
+            after: lastParam,
         }
     }
 
@@ -48,17 +48,17 @@ export default function Movies() {
     let hasNextPage = data?.movies?.pageInfo?.hasNextPage ?? false;
     let hasPreviousPage = data?.movies?.pageInfo?.hasPreviousPage ?? false;
     let replaceResults = (previous: ListMoviesQuery, fetchedResults: ListMoviesQuery | null | undefined, isNext: boolean) => {
-        let afterCursor = fetchedResults?.movies?.pageInfo?.startCursor ??
-            fetchedResults?.movies?.pageInfo?.startCursor;
+        let afterCursor = fetchedResults?.movies?.pageInfo?.endCursor ??
+            fetchedResults?.movies?.pageInfo?.endCursor;
         let beforeCursor = fetchedResults?.movies?.pageInfo?.startCursor ??
             fetchedResults?.movies?.pageInfo?.startCursor;
 
         if (isNext) {
-            setAfterParam(afterCursor);
-            setBeforeParam(null);
+            setLastParam(afterCursor);
+            setFirstParam(null);
         } else {
-            setAfterParam(null);
-            setBeforeParam(beforeCursor);
+            setLastParam(null);
+            setFirstParam(beforeCursor);
         }
         return fetchedResults ?? previous;
     }
@@ -97,12 +97,17 @@ export default function Movies() {
             <button onClick={onClickPreviousPage} disabled={!hasPreviousPage}>Previous</button>
             <button onClick={onClickNextPage} disabled={!hasNextPage}>Next</button>
             <div>
-                {data?.movies?.edges?.map(edge => edge?.node!!).map(movie => (
-                    <div>
-                        <div key={movie.id}>{movie.name} [{movie.id}]</div>
-                        <CastMembers cast={movie.cast}/>
-                    </div>
-                ))}
+                {data?.movies?.edges?.map(edge => {
+                    let edged = edge!!;
+                    let movie = edged.node!!;
+                    return (
+                        <div>
+                            <div key={movie.id}>{movie.name}</div>
+                            <div><small>{movie.id} / {edged.cursor}</small></div>
+                            <CastMembers cast={movie.cast}/>
+                        </div>
+                    )
+                })}
             </div>
         </div>
     );
