@@ -2,34 +2,34 @@ package io.bsamartins.sandbox.graphql.graphql.dataloaders
 
 import com.netflix.graphql.dgs.DgsDataLoader
 import graphql.schema.DataFetchingEnvironment
-import io.bsamartins.sandbox.graphql.codegen.types.Cast
-import io.bsamartins.sandbox.graphql.data.ActorService
 import io.bsamartins.sandbox.graphql.data.MovieCastRepository
-import io.bsamartins.sandbox.graphql.graphql.toModel
+import io.github.oshai.kotlinlogging.KotlinLogging
+import org.dataloader.BatchLoaderEnvironment
 import org.dataloader.DataLoader
-import org.dataloader.MappedBatchLoader
+import org.dataloader.MappedBatchLoaderWithContext
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.CompletionStage
 
 @DgsDataLoader(name = "cast")
 class CastDataLoader(
-    var actorService: ActorService,
     var movieCastRepository: MovieCastRepository,
-) : MappedBatchLoader<String, List<Cast>> {
+) : MappedBatchLoaderWithContext<String, List<String>> {
 
     companion object {
-        fun get(env: DataFetchingEnvironment): DataLoader<String, List<Cast>> = env.getDataLoader("cast")!!
+        fun get(env: DataFetchingEnvironment): DataLoader<String, List<String>> = env.getDataLoader("cast")!!
     }
 
-    override fun load(keys: Set<String>): CompletionStage<Map<String, List<Cast>>> {
+    private val logger = KotlinLogging.logger {}
+
+    override fun load(keys: Set<String>, environment: BatchLoaderEnvironment): CompletionStage<Map<String, List<String>>> {
         return CompletableFuture.supplyAsync {
+            logger.info { "Loading cast ${keys.size}" }
             keys.associateWith { movieId -> resolveMovieCast(movieId) }
         }
     }
 
-    private fun resolveMovieCast(movieId: String): List<Cast> {
+    private fun resolveMovieCast(movieId: String): List<String> {
         return movieCastRepository.findAllByMovieId(movieId)
-            .mapNotNull { cast -> actorService.findById(cast.actorId) }
-            .map { actor -> Cast(actor = actor.toModel()) }
+            .map { it.actorId }
     }
 }
