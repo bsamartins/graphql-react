@@ -52,14 +52,16 @@ export default function Movies() {
 
     return (
         <div>
-            <input
-                type="text"
-                value={queryInput}
-                onChange={(event) => {
-                    const value = event.target.value;
-                    setQueryInput(value);
-                }}
-            />
+            <div>
+                <input
+                    type="text"
+                    value={queryInput}
+                    onChange={(event) => {
+                        const value = event.target.value;
+                        setQueryInput(value);
+                    }}
+                />
+            </div>
             <button onClick={onClickPreviousPage} disabled={!hasPreviousPage}>Previous</button>
             <button onClick={onClickNextPage} disabled={!hasNextPage}>Next</button>
             <div>
