@@ -10,14 +10,22 @@ import org.springframework.stereotype.Component
 @Component
 class DataInitialization(
     private val objectMapper: ObjectMapper,
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
+    private val actorRepository: ActorRepository,
 ) {
     @PostConstruct
     fun populate() {
+        val actors = objectMapper.readValue<List<ActorData>>(ClassPathResource("data/actors.json").file)
+        actors.forEach { actor ->
+            actorRepository.save(
+                Actor(id = actor.id, name = actor.name)
+            )
+        }
+
         val movies = objectMapper.readValue<List<MovieData>>(ClassPathResource("data/movies.json").file)
-        movies.forEach {
+        movies.forEach { movie ->
             movieRepository.save(
-                Movie(id = it.id, title = it.title)
+                Movie(id = movie.id, title = movie.title)
             )
         }
     }
@@ -27,5 +35,11 @@ class DataInitialization(
         val id: String,
         val title: String,
         val actors: List<String>
+    )
+
+    private data class ActorData(
+        @JsonProperty("objectID")
+        val id: String,
+        val name: String,
     )
 }
