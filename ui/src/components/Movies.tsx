@@ -44,6 +44,8 @@ export default function Movies() {
     let onClickPreviousPage = async () => {
         await fetchMore({
             variables: {
+                first: null,
+                last: 10,
                 before: data?.movies?.pageInfo?.startCursor
             },
             updateQuery: (previousResult, { fetchMoreResult }) => replaceResults(previousResult, fetchMoreResult),
