@@ -11,3 +11,7 @@ spring:
       ddl-auto: update
   datasource:
     url: "jdbc:h2:file:./.data/database"
+
+#logging:
+#  level:
+#    org.hibernate: DEBUG
