@@ -27,5 +27,5 @@ private fun MovieData.toModel(): Movie =
     Movie(
         id = id,
         name = title,
-        actors = actors.map { actorPartial(it) }
+        actors = emptyList()
     )
