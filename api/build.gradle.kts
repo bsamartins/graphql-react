@@ -21,6 +21,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
+    implementation("org.hibernate.search:hibernate-search-mapper-orm:${libs.versions.hibernate.search.get()}")
+    implementation("org.hibernate.search:hibernate-search-backend-lucene:${libs.versions.hibernate.search.get()}")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     runtimeOnly("com.h2database:h2")
 }

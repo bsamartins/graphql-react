@@ -9,6 +9,8 @@ class MovieService(
 ) {
     fun listAll(pageRequest: PageRequest): List<Movie> = movieRepository.findAll()
 
+    fun search(pageRequest: PageRequest, query: String? = null): List<Movie> = movieRepository.searchAll(query)
+
     fun getCast(movieId: String): Set<String> =
         movieCastRepository.findAllByMovieId(movieId).map { it.actorId }.toSet()
 }
