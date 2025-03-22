@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MovieCastRepository :  JpaRepository<MovieCast, MovieCast.Key>
+interface MovieCastRepository :  JpaRepository<MovieCast, MovieCast.Key> {
+    fun findAllByMovieId(movieId: String): List<MovieCast>
+}
 
 @Entity
 @IdClass(MovieCast.Key::class)

@@ -7,8 +7,11 @@ import com.netflix.graphql.dgs.DgsQuery
 import graphql.relay.Connection
 import graphql.schema.DataFetchingEnvironment
 import io.bsamartins.sandbox.graphql.codegen.types.Actor
+import io.bsamartins.sandbox.graphql.codegen.types.Cast
 import io.bsamartins.sandbox.graphql.codegen.types.Movie
 import io.bsamartins.sandbox.graphql.data.ActorService
+import io.bsamartins.sandbox.graphql.data.MovieCastRepository
+import org.dataloader.DataLoader
 import org.dataloader.MappedBatchLoader
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.CompletionStage
@@ -24,25 +27,34 @@ class ActorsDataFetcher(
         .map { it.toModel() }
         .asConnection(env)
 
-    @DgsData(parentType = "Movie", field = "actors")
-    fun movieActors(env: DataFetchingEnvironment): CompletableFuture<List<Actor>> {
-        val dataLoader = env.getDataLoader<String, Actor>("actors")!!
+    @DgsData(parentType = "Movie", field = "cast")
+    fun movieActors(env: DataFetchingEnvironment): CompletableFuture<List<Cast>> {
+        val dataLoader = DirectorsDataLoader.get(env)
         val movie = env.getSource<Movie>()!!
-        return dataLoader.loadMany(movie.actors.map { it.name })
-            .thenApply { it.filterNotNull() }
+        return dataLoader.load(movie.id)
     }
 }
 
 @DgsDataLoader(name = "actors")
 class DirectorsDataLoader(
     var actorService: ActorService,
-) : MappedBatchLoader<String, Actor> {
+    var movieCastRepository: MovieCastRepository,
+) : MappedBatchLoader<String, List<Cast>> {
 
-    override fun load(keys: Set<String>): CompletionStage<Map<String, Actor>> {
+    companion object {
+        fun get(env: DataFetchingEnvironment): DataLoader<String, List<Cast>> = env.getDataLoader("actors")!!
+    }
+
+    override fun load(keys: Set<String>): CompletionStage<Map<String, List<Cast>>> {
         return CompletableFuture.supplyAsync {
-            keys.mapNotNull { key -> actorService.findByName(key)?.let { key to it.toModel() } }
-                .toMap()
+            keys.associateWith { movieId -> resolveMovieCast(movieId) }
         }
+    }
+
+    private fun resolveMovieCast(movieId: String): List<Cast> {
+        return movieCastRepository.findAllByMovieId(movieId)
+            .mapNotNull { cast -> actorService.findById(cast.actorId) }
+            .map { actor -> Cast(actor = actor.toModel()) }
     }
 }
 

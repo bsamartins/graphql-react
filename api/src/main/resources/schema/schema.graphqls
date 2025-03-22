@@ -6,10 +6,14 @@ type Query {
 type Movie @connection {
   id: String!
   name: String!
-  actors: [Actor!]!
+  cast: [Cast!]!
 }
 
 type Actor @connection {
   id: String!
   name: String!
+}
+
+type Cast {
+  actor: Actor!
 }
