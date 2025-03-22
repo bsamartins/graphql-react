@@ -20,12 +20,14 @@ dependencies {
     implementation("com.netflix.graphql.dgs:graphql-dgs-pagination")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     runtimeOnly("com.h2database:h2")
 }
 
 noArg {
     annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.Embeddable")
 }
 
 tasks.named<GenerateJavaTask>("generateJava") {
