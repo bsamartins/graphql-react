@@ -14,12 +14,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query ListMovies($first: Int, $after: String) {\n    movies(first: $first, after: $after) {\n      edges {\n        cursor\n        node {\n          id\n          name\n          actors {\n            id\n            name\n          }\n        }\n      }\n      pageInfo {\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n": typeof types.ListMoviesDocument,
-    "\n  query ListActors {\n    actors {\n      edges {\n        cursor\n        node {\n          id\n          name\n        }\n      }\n      pageInfo {\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n": typeof types.ListActorsDocument,
+    "\n  query ListMovies($first: Int, $last: Int, $after: String, $before: String) {\n    movies(first: $first, last: $last, after: $after, before: $before) {\n      edges {\n        cursor\n        node {\n          id\n          name\n          actors {\n            id\n            name\n          }\n        }\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n": typeof types.ListMoviesDocument,
 };
 const documents: Documents = {
-    "\n  query ListMovies($first: Int, $after: String) {\n    movies(first: $first, after: $after) {\n      edges {\n        cursor\n        node {\n          id\n          name\n          actors {\n            id\n            name\n          }\n        }\n      }\n      pageInfo {\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n": types.ListMoviesDocument,
-    "\n  query ListActors {\n    actors {\n      edges {\n        cursor\n        node {\n          id\n          name\n        }\n      }\n      pageInfo {\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n": types.ListActorsDocument,
+    "\n  query ListMovies($first: Int, $last: Int, $after: String, $before: String) {\n    movies(first: $first, last: $last, after: $after, before: $before) {\n      edges {\n        cursor\n        node {\n          id\n          name\n          actors {\n            id\n            name\n          }\n        }\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n": types.ListMoviesDocument,
 };
 
 /**
@@ -39,11 +37,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query ListMovies($first: Int, $after: String) {\n    movies(first: $first, after: $after) {\n      edges {\n        cursor\n        node {\n          id\n          name\n          actors {\n            id\n            name\n          }\n        }\n      }\n      pageInfo {\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n"): (typeof documents)["\n  query ListMovies($first: Int, $after: String) {\n    movies(first: $first, after: $after) {\n      edges {\n        cursor\n        node {\n          id\n          name\n          actors {\n            id\n            name\n          }\n        }\n      }\n      pageInfo {\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n"];
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gql(source: "\n  query ListActors {\n    actors {\n      edges {\n        cursor\n        node {\n          id\n          name\n        }\n      }\n      pageInfo {\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n"): (typeof documents)["\n  query ListActors {\n    actors {\n      edges {\n        cursor\n        node {\n          id\n          name\n        }\n      }\n      pageInfo {\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query ListMovies($first: Int, $last: Int, $after: String, $before: String) {\n    movies(first: $first, last: $last, after: $after, before: $before) {\n      edges {\n        cursor\n        node {\n          id\n          name\n          actors {\n            id\n            name\n          }\n        }\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n"): (typeof documents)["\n  query ListMovies($first: Int, $last: Int, $after: String, $before: String) {\n    movies(first: $first, last: $last, after: $after, before: $before) {\n      edges {\n        cursor\n        node {\n          id\n          name\n          actors {\n            id\n            name\n          }\n        }\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

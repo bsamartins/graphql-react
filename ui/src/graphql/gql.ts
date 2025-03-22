@@ -1,8 +1,8 @@
 import {gql} from '../__generated__';
 
 export const LIST_MOVIES = gql(`
-  query ListMovies($first: Int, $after: String) {
-    movies(first: $first, after: $after) {
+  query ListMovies($first: Int, $last: Int, $after: String, $before: String) {
+    movies(first: $first, last: $last, after: $after, before: $before) {
       edges {
         cursor
         node {
@@ -16,6 +16,7 @@ export const LIST_MOVIES = gql(`
       }
       pageInfo {
         hasNextPage
+        hasPreviousPage
         startCursor
         endCursor
       }
