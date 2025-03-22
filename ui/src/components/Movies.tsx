@@ -1,7 +1,7 @@
 import {useQuery} from "@apollo/client";
 import {LIST_MOVIES} from "../graphql/gql";
-import {MovieActor} from "./MovieActors";
 import {ListMoviesQuery} from "../__generated__/graphql";
+import CastMembers from "./CastMembers";
 
 export default function Movies() {
     const { loading, error, data, fetchMore } = useQuery(LIST_MOVIES, {
@@ -40,7 +40,7 @@ export default function Movies() {
                 {data?.movies?.edges?.map(edge => edge?.node!!).map(movie => (
                     <div>
                         <div key={movie.id}>{movie.name}</div>
-                        <MovieActor actors={movie.actors}/>
+                        <CastMembers cast={movie.cast}/>
                     </div>
                 ))}
             </div>
