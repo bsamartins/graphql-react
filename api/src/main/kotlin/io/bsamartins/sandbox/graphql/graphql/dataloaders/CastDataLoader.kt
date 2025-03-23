@@ -29,7 +29,7 @@ class CastDataLoader(
     }
 
     private fun resolveMovieCast(movieId: Long): List<Long> {
-        return movieCastRepository.findAllByMovieId(movieId)
+        return movieCastRepository.findAllByMovieIdOrderByOrder(movieId)
             .map { it.actorId }
     }
 }

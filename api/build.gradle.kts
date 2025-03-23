@@ -24,9 +24,11 @@ dependencies {
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
     implementation("org.hibernate.search:hibernate-search-mapper-orm:${libs.versions.hibernate.search.get()}")
     implementation("org.hibernate.search:hibernate-search-backend-lucene:${libs.versions.hibernate.search.get()}")
+    runtimeOnly("org.hibernate.orm:hibernate-community-dialects")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv")
-    runtimeOnly("com.h2database:h2")
+    runtimeOnly("org.xerial:sqlite-jdbc:3.49.1.0")
+
 }
 
 noArg {

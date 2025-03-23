@@ -74,39 +74,18 @@ class DataInitialization(
                                     Actor(id = castMember.actorId, name = castMember.name)
                                 )
                             }
-                            movieCastRepository.save(MovieCast(movieId = movieId, actorId = castMember.actorId))
+                            movieCastRepository.save(
+                                MovieCast(
+                                    movieId = movieId,
+                                    actorId = castMember.actorId,
+                                    order = castMember.order,
+                                )
+                            )
                         }
                     }
                     rowNum++
                 }
             }
-//        val actors = objectMapper.readValue<List<ActorData>>(ClassPathResource("data/actors.json").file)
-//        val actorsByName = actors.associateBy { it.name }
-//        actors.stream().parallel().forEach { actor ->
-//            actorRepository.save(
-//                Actor(id = actor.id, name = actor.name)
-//            )
-//        }
-//
-//        logger.info { "Loading movies" }
-//        val movies = objectMapper.readValue<List<MovieData>>(ClassPathResource("data/movies.json").file)
-//        var progress = 0
-//        movies.chunked(50).stream().parallel().forEach { chunks ->
-//            val toInsert = chunks.map { movie -> Movie(id = movie.id, title = movie.title) }
-//            movieRepository.saveAll(toInsert)
-//            progress += toInsert.count()
-//            logger.info { "Movie inserted $progress/${movies.size}" }
-//        }
-//
-//        movies.flatMap { movie ->
-//            movie.actors.mapNotNull { actorName ->
-//                actorsByName[actorName]?.let { actor -> movie to actor }
-//            }
-//        }.parallelStream()
-//            .forEach { (movie, actor) ->
-//                movieCastRepository.save(MovieCast(actor.id, movie.id))
-//            }
-
         }
 
         logger.info { "Done" }
