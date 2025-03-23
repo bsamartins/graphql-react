@@ -1,10 +1,8 @@
-import {useQuery} from "@apollo/client";
-import {LIST_MOVIES} from "../graphql/gql";
-import {ListMoviesQuery, QueryMoviesArgs} from "../__generated__/graphql";
 import CastMembers from "./CastMembers";
 import {useEffect, useState} from "react";
 import {useDebounce} from "use-debounce";
 import {useQueryParam} from "../hooks";
+import {ListMoviesQuery, QueryMoviesArgs, useListMoviesQuery} from "../_generated__/graphql/gql";
 
 const PAGE_SIZE = 10;
 
@@ -35,9 +33,7 @@ export default function Movies() {
 
     console.log(variables);
 
-    const { loading, error, data, fetchMore } = useQuery(LIST_MOVIES, {
-        variables,
-    });
+    const { loading, error, data, fetchMore } = useListMoviesQuery({variables});
 
     useEffect(() => {
         setQueryInput(queryParam ?? "");

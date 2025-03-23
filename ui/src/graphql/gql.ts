@@ -1,7 +1,7 @@
-import {gql} from '../__generated__';
+import {gql} from "@apollo/client";
 
 export const CAST_FRAGMENT = gql(`
-  fragment CastFragment on Cast {
+  fragment Cast on Cast {
     character
     actor {
       id
@@ -19,7 +19,7 @@ export const LIST_MOVIES = gql(`
           id
           name
           cast {
-            ...CastFragment
+            ...Cast
           }          
         }
       }

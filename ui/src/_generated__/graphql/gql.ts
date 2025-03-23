@@ -1,5 +1,5 @@
-/* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -7,6 +7,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -345,7 +346,7 @@ export type _Service = {
   sdl: Scalars['String']['output'];
 };
 
-export type CastFragmentFragment = { __typename?: 'Cast', character: string, actor: { __typename?: 'Actor', id: number, name: string } };
+export type CastFragment = { __typename?: 'Cast', character: string, actor: { __typename?: 'Actor', id: number, name: string } };
 
 export type ListMoviesQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -358,5 +359,77 @@ export type ListMoviesQueryVariables = Exact<{
 
 export type ListMoviesQuery = { __typename?: 'Query', movies: { __typename?: 'MovieConnection', edges?: Array<{ __typename?: 'MovieEdge', cursor?: string | null, node?: { __typename?: 'Movie', id: number, name: string, cast: Array<{ __typename?: 'Cast', character: string, actor: { __typename?: 'Actor', id: number, name: string } }> } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
-export const CastFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CastFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Cast"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"character"}},{"kind":"Field","name":{"kind":"Name","value":"actor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<CastFragmentFragment, unknown>;
-export const ListMoviesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ListMovies"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"last"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"before"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movies"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"last"},"value":{"kind":"Variable","name":{"kind":"Name","value":"last"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"before"},"value":{"kind":"Variable","name":{"kind":"Name","value":"before"}}},{"kind":"Argument","name":{"kind":"Name","value":"query"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cursor"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"cast"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CastFragment"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasPreviousPage"}},{"kind":"Field","name":{"kind":"Name","value":"startCursor"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CastFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Cast"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"character"}},{"kind":"Field","name":{"kind":"Name","value":"actor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<ListMoviesQuery, ListMoviesQueryVariables>;
+export const CastFragmentDoc = gql`
+    fragment Cast on Cast {
+  character
+  actor {
+    id
+    name
+  }
+}
+    `;
+export const ListMoviesDocument = gql`
+    query ListMovies($first: Int, $last: Int, $after: String, $before: String, $query: String) {
+  movies(
+    first: $first
+    last: $last
+    after: $after
+    before: $before
+    query: $query
+  ) {
+    edges {
+      cursor
+      node {
+        id
+        name
+        cast {
+          ...Cast
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+  }
+}
+    ${CastFragmentDoc}`;
+
+/**
+ * __useListMoviesQuery__
+ *
+ * To run a query within a React component, call `useListMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListMoviesQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useListMoviesQuery(baseOptions?: Apollo.QueryHookOptions<ListMoviesQuery, ListMoviesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListMoviesQuery, ListMoviesQueryVariables>(ListMoviesDocument, options);
+      }
+export function useListMoviesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListMoviesQuery, ListMoviesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListMoviesQuery, ListMoviesQueryVariables>(ListMoviesDocument, options);
+        }
+export function useListMoviesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ListMoviesQuery, ListMoviesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ListMoviesQuery, ListMoviesQueryVariables>(ListMoviesDocument, options);
+        }
+export type ListMoviesQueryHookResult = ReturnType<typeof useListMoviesQuery>;
+export type ListMoviesLazyQueryHookResult = ReturnType<typeof useListMoviesLazyQuery>;
+export type ListMoviesSuspenseQueryHookResult = ReturnType<typeof useListMoviesSuspenseQuery>;
+export type ListMoviesQueryResult = Apollo.QueryResult<ListMoviesQuery, ListMoviesQueryVariables>;
