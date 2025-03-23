@@ -78,6 +78,7 @@ class DataInitialization(
                                 MovieCast(
                                     movieId = movieId,
                                     actorId = castMember.actorId,
+                                    character = castMember.character,
                                     order = castMember.order,
                                 )
                             )

@@ -22,6 +22,8 @@ class MovieCast(
     @Id
     val movieId: Long,
 
+    val character: String,
+
     @Column(name = "\"order\"")
     val order: Int,
 ) {
