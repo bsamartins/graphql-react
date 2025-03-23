@@ -31,16 +31,13 @@ class ActorsDataFetcher(
         val movie = env.getSource<Movie>()!!
         return movieService.getCast(movie.id.toLong()).let {
             actorDataLoader.loadMany(it.toList())
-                .thenApply { actors -> actors.map { actor -> Cast(actor = actor) }.toList() }
+                .thenApply { actors -> actors.map { actor -> Cast(actor = actor, character = "") }.toList() }
         }
     }
 }
 
 internal fun ActorData.toModel(): Actor =
     Actor(
-        id = id.toString(),
+        id = id.toInt(),
         name = name,
     )
-
-internal fun actorPartial(name: String): Actor =
-    Actor(id = "", name = name)
