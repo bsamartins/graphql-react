@@ -14,14 +14,14 @@ import java.util.concurrent.CompletionStage
 @DgsDataLoader(name = "actor")
 class ActorDataLoader(
     var actorService: ActorService,
-) : MappedBatchLoader<String, Actor> {
+) : MappedBatchLoader<Long, Actor> {
     private val logger = KotlinLogging.logger {}
 
     companion object {
-        fun get(env: DataFetchingEnvironment): DataLoader<String, Actor> = env.getDataLoader("actor")!!
+        fun get(env: DataFetchingEnvironment): DataLoader<Long, Actor> = env.getDataLoader("actor")!!
     }
 
-    override fun load(keys: Set<String>): CompletionStage<Map<String, Actor>> {
+    override fun load(keys: Set<Long>): CompletionStage<Map<Long, Actor>> {
         return CompletableFuture.supplyAsync {
             logger.info { "Loading actors ${keys.size}" }
             keys.mapNotNull { actorId -> actorService.findById(actorId)?.let { actor -> actorId to actor.toModel() } }

@@ -25,6 +25,7 @@ dependencies {
     implementation("org.hibernate.search:hibernate-search-mapper-orm:${libs.versions.hibernate.search.get()}")
     implementation("org.hibernate.search:hibernate-search-backend-lucene:${libs.versions.hibernate.search.get()}")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv")
     runtimeOnly("com.h2database:h2")
 }
 

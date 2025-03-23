@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MovieRepository : JpaRepository<Movie, String>, JpaSpecificationExecutor<Movie>, CustomMovieRepository
+interface MovieRepository : JpaRepository<Movie, Long>, JpaSpecificationExecutor<Movie>, CustomMovieRepository
 
 interface CustomMovieRepository {
     fun searchAll(query: String? = null): List<Movie>
@@ -47,7 +47,7 @@ inline fun <reified T> SearchSession.search() =
 @Indexed
 class Movie(
     @Id
-    val id: String,
+    val id: Long,
 
     @FullTextField
     val title: String,

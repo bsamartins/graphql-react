@@ -27,7 +27,7 @@ class MoviesDataFetcher(
 
 private fun MovieData.toModel(): Movie =
     Movie(
-        id = id,
+        id = id.toString(),
         name = title,
         cast = emptyList()
     )

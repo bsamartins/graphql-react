@@ -6,14 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ActorRepository : JpaRepository<Actor, String> {
+interface ActorRepository : JpaRepository<Actor, Long> {
     fun findByName(name: String): Actor?
 }
 
 @Entity
 class Actor(
     @Id
-    val id: String,
+    val id: Long,
 
     val name: String,
 )

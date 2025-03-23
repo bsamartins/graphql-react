@@ -30,7 +30,7 @@ class ActorsDataFetcher(
         val actorDataLoader = ActorDataLoader.get(env)
         val movie = env.getSource<Movie>()!!
         return movieService.getCast(movie.id).let {
-            actorDataLoader.loadMany(it.toList())
+            actorDataLoader.loadMany(it.toList().map { it.toLong() })
                 .thenApply { actors -> actors.map { actor -> Cast(actor = actor) }.toList() }
         }
     }
@@ -38,7 +38,7 @@ class ActorsDataFetcher(
 
 internal fun ActorData.toModel(): Actor =
     Actor(
-        id = id,
+        id = id.toString(),
         name = name,
     )
 
