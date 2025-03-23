@@ -10,8 +10,8 @@ export default function Movies() {
     const [queryInput, setQueryInput] = useState<string>("");
     const [queryDebounced] = useDebounce(queryInput, 500);
     const [queryParam, setQueryParam] = useQueryParam("query");
-    // const [lastParam, setLastParam] = useQueryParam("last");
-    // const [firstParam, setFirstParam] = useQueryParam("first");
+    const [lastParam, setLastParam] = useQueryParam("last");
+    const [firstParam, setFirstParam] = useQueryParam("first");
 
     let queryParams: QueryMoviesArgs;
     // if (firstParam) {
@@ -31,8 +31,6 @@ export default function Movies() {
         query: queryDebounced ? queryDebounced : null
     }
 
-    console.log(variables);
-
     const { loading, error, data, fetchMore } = useListMoviesQuery({variables});
 
     useEffect(() => {
@@ -41,6 +39,8 @@ export default function Movies() {
 
     useEffect(() => {
         setQueryParam(queryDebounced);
+        setFirstParam(null);
+        setLastParam(null);
     }, [queryDebounced]);
 
     if (loading) return <>'Loading...'</>;
@@ -53,13 +53,13 @@ export default function Movies() {
         let beforeCursor = fetchedResults?.movies?.pageInfo?.startCursor ??
             fetchedResults?.movies?.pageInfo?.startCursor;
 
-        // if (isNext) {
-        //     setLastParam(afterCursor);
-        //     setFirstParam(null);
-        // } else {
-        //     setLastParam(null);
-        //     setFirstParam(beforeCursor);
-        // }
+        if (isNext) {
+            setLastParam(afterCursor);
+            setFirstParam(null);
+        } else {
+            setLastParam(null);
+            setFirstParam(beforeCursor);
+        }
         return fetchedResults ?? previous;
     }
     let onClickNextPage = async () => {
