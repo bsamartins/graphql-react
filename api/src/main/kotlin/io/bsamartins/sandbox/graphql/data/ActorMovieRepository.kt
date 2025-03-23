@@ -9,23 +9,23 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface MovieCastRepository :  JpaRepository<MovieCast, MovieCast.Key> {
-    fun findAllByMovieId(movieId: String): List<MovieCast>
+    fun findAllByMovieId(movieId: Long): List<MovieCast>
 }
 
 @Entity
 @IdClass(MovieCast.Key::class)
 class MovieCast(
     @Id
-    val actorId: String,
+    val actorId: Long,
 
     @Id
-    val movieId: String,
+    val movieId: Long,
 
 ) {
     @Embeddable
     data class Key(
-        val actorId: String,
-        val movieId: String,
+        val actorId: Long,
+        val movieId: Long,
     )
 }
 

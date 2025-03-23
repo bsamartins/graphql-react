@@ -29,8 +29,8 @@ class ActorsDataFetcher(
     fun movieActors(env: DataFetchingEnvironment): CompletableFuture<List<Cast>> {
         val actorDataLoader = ActorDataLoader.get(env)
         val movie = env.getSource<Movie>()!!
-        return movieService.getCast(movie.id).let {
-            actorDataLoader.loadMany(it.toList().map { it.toLong() })
+        return movieService.getCast(movie.id.toLong()).let {
+            actorDataLoader.loadMany(it.toList())
                 .thenApply { actors -> actors.map { actor -> Cast(actor = actor) }.toList() }
         }
     }

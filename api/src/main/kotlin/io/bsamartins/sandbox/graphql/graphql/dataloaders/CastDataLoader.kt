@@ -13,22 +13,22 @@ import java.util.concurrent.CompletionStage
 @DgsDataLoader(name = "cast")
 class CastDataLoader(
     var movieCastRepository: MovieCastRepository,
-) : MappedBatchLoaderWithContext<String, List<String>> {
+) : MappedBatchLoaderWithContext<Long, List<Long>> {
 
     companion object {
-        fun get(env: DataFetchingEnvironment): DataLoader<String, List<String>> = env.getDataLoader("cast")!!
+        fun get(env: DataFetchingEnvironment): DataLoader<Long, List<Long>> = env.getDataLoader("cast")!!
     }
 
     private val logger = KotlinLogging.logger {}
 
-    override fun load(keys: Set<String>, environment: BatchLoaderEnvironment): CompletionStage<Map<String, List<String>>> {
+    override fun load(keys: Set<Long>, environment: BatchLoaderEnvironment): CompletionStage<Map<Long, List<Long>>> {
         return CompletableFuture.supplyAsync {
             logger.info { "Loading cast ${keys.size}" }
             keys.associateWith { movieId -> resolveMovieCast(movieId) }
         }
     }
 
-    private fun resolveMovieCast(movieId: String): List<String> {
+    private fun resolveMovieCast(movieId: Long): List<Long> {
         return movieCastRepository.findAllByMovieId(movieId)
             .map { it.actorId }
     }

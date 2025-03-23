@@ -12,7 +12,6 @@ import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Component
 import java.util.concurrent.atomic.AtomicBoolean
-import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
 import java.util.zip.ZipFile
 
@@ -61,8 +60,7 @@ class DataInitialization(
                 while (it.hasNext()) {
                     val row = it.next()
                     if (rowNum != 0) {
-                        val id = row[0]
-                        val title = row[1]
+                        val movieId = row[0].toLong()
                         val castData = row[2]
                         val cast = try {
                             objectMapper.readValue<List<CastData>>(castData)
@@ -76,6 +74,7 @@ class DataInitialization(
                                     Actor(id = castMember.actorId, name = castMember.name)
                                 )
                             }
+                            movieCastRepository.save(MovieCast(movieId = movieId, actorId = castMember.actorId))
                         }
                     }
                     rowNum++
