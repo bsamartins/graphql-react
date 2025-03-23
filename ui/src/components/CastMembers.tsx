@@ -1,8 +1,8 @@
 import React from "react";
-import {Cast} from "../__generated__/graphql";
+import {CastFragmentFragment} from "../__generated__/graphql";
 
 interface Props {
-    cast: Cast[];
+    cast: [CastFragmentFragment];
 }
 
 export const CastMembers: React.FC<Props> = ({ cast }) => {

@@ -10,7 +10,15 @@ const config: CodegenConfig = {
             plugins: [],
             presetConfig: {
                 gqlTagName: 'gql',
-            }
+                fragmentMasking: false,
+            },
+            config: {
+                extractAllFieldsToTypes: true,
+                futureProofEnums: true,
+                futureProofUnions: true,
+                onlyOperationTypes: false,
+                avoidOptionals: false,
+            },
         }
     },
     ignoreNoDocuments: true,
