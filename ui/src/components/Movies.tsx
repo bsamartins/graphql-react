@@ -28,11 +28,15 @@ export default function Movies() {
         }
     }
 
+    let variables: QueryMoviesArgs = {
+        ...queryParams,
+        query: queryDebounced ? queryDebounced : null
+    }
+
+    console.log(variables);
+
     const { loading, error, data, fetchMore } = useQuery(LIST_MOVIES, {
-        variables: {
-            ...queryParams,
-            query: queryDebounced ? queryDebounced : null
-        },
+        variables,
     });
 
     useEffect(() => {
