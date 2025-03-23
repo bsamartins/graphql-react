@@ -8,8 +8,8 @@ interface Props {
 export const CastMembers: React.FC<Props> = ({ cast }) => {
     return (
         <ul>
-            {cast.map(cast => (
-                <li key={cast.actor.id}>{cast.actor.name}</li>
+            {cast.map(casting => (
+                <li key={casting.actor.id}>{casting.actor.name} <small>{casting.character}</small></li>
             ))}
         </ul>
     );
