@@ -11,5 +11,5 @@ class ActorService(
 
     fun findByName(name: String): Actor? = actorRepository.findByName(name)
 
-    fun findById(id: Long): Actor? = actorRepository.findByIdOrNull(id)
+    fun findById(id: Int): Actor? = actorRepository.findByIdOrNull(id)
 }

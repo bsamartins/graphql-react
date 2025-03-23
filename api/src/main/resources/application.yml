@@ -11,6 +11,8 @@ spring:
       ddl-auto: update
   datasource:
     url: "jdbc:sqlite:.sample.db"
+  config:
+    import: file:.secrets.yml
 
 management:
   endpoints:

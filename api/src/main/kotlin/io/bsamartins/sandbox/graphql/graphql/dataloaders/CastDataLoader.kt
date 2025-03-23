@@ -13,7 +13,7 @@ import java.util.concurrent.CompletionStage
 @DgsDataLoader(name = "cast")
 class CastDataLoader(
     var movieCastRepository: MovieCastRepository,
-) : MappedBatchLoaderWithContext<Long, List<Long>> {
+) : MappedBatchLoaderWithContext<Int, List<Int>> {
 
     companion object {
         fun get(env: DataFetchingEnvironment): DataLoader<Long, List<Long>> = env.getDataLoader("cast")!!
@@ -21,14 +21,14 @@ class CastDataLoader(
 
     private val logger = KotlinLogging.logger {}
 
-    override fun load(keys: Set<Long>, environment: BatchLoaderEnvironment): CompletionStage<Map<Long, List<Long>>> {
+    override fun load(keys: Set<Int>, environment: BatchLoaderEnvironment): CompletionStage<Map<Int, List<Int>>> {
         return CompletableFuture.supplyAsync {
             logger.info { "Loading cast ${keys.size}" }
             keys.associateWith { movieId -> resolveMovieCast(movieId) }
         }
     }
 
-    private fun resolveMovieCast(movieId: Long): List<Long> {
+    private fun resolveMovieCast(movieId: Int): List<Int> {
         return movieCastRepository.findAllByMovieIdOrderByOrder(movieId)
             .map { it.actorId }
     }

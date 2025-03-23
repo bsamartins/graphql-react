@@ -11,6 +11,6 @@ class MovieService(
 
     fun search(pageRequest: PageRequest, query: String? = null): List<Movie> = movieRepository.searchAll(query)
 
-    fun getCast(movieId: Long): List<MovieCast> =
+    fun getCast(movieId: Int): List<MovieCast> =
         movieCastRepository.findAllByMovieIdOrderByOrder(movieId)
 }

@@ -10,17 +10,17 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface MovieCastRepository :  JpaRepository<MovieCast, MovieCast.Key> {
-    fun findAllByMovieIdOrderByOrder(movieId: Long): List<MovieCast>
+    fun findAllByMovieIdOrderByOrder(movieId: Int): List<MovieCast>
 }
 
 @Entity
 @IdClass(MovieCast.Key::class)
 class MovieCast(
     @Id
-    val actorId: Long,
+    val actorId: Int,
 
     @Id
-    val movieId: Long,
+    val movieId: Int,
 
     val character: String,
 
@@ -29,8 +29,8 @@ class MovieCast(
 ) {
     @Embeddable
     data class Key(
-        val actorId: Long,
-        val movieId: Long,
+        val actorId: Int,
+        val movieId: Int,
     )
 }
 

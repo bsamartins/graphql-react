@@ -60,7 +60,7 @@ class DataInitialization(
                 while (it.hasNext()) {
                     val row = it.next()
                     if (rowNum != 0) {
-                        val movieId = row[0].toLong()
+                        val movieId = row[0].toInt()
                         val castData = row[2]
                         val cast = try {
                             objectMapper.readValue<List<CastData>>(castData)
@@ -117,9 +117,9 @@ class DataInitialization(
             while (it.hasNext()) {
                 val row = it.next()
                 if (progress.get() != 0L) {
-                    val id = row[3]
+                    val id = row[3].toInt()
                     val title = row[6]
-                    movieRepository.save(Movie(id = id.toLong(), title = title))
+                    movieRepository.save(Movie(id = id, title = title))
                 }
                 progress.incrementAndGet()
             }
@@ -139,7 +139,7 @@ class DataInitialization(
         val creditId: String,
         val gender: Int,
         @JsonProperty("id")
-        val actorId: Long,
+        val actorId: Int,
         val order: Int,
     )
 }

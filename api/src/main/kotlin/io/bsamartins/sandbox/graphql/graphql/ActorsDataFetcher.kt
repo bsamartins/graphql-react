@@ -29,13 +29,13 @@ class ActorsDataFetcher(
     fun movieActors(env: DataFetchingEnvironment): CompletableFuture<List<Cast>> {
         val actorDataLoader = ActorDataLoader.get(env)
         val movie = env.getSource<Movie>()!!
-        val cast = movieService.getCast(movie.id.toLong())
+        val cast = movieService.getCast(movie.id)
         return actorDataLoader.loadMany(cast.map { it.actorId })
             .thenApply { actors ->
                 val actorsById = actors.associateBy { it.id }
                 cast.map { casting ->
                     Cast(
-                        actor = actorsById.getValue(casting.actorId.toInt()),
+                        actor = actorsById.getValue(casting.actorId),
                         character = casting.character,
                     )
                 }
@@ -45,6 +45,6 @@ class ActorsDataFetcher(
 
 internal fun ActorData.toModel(): Actor =
     Actor(
-        id = id.toInt(),
+        id = id,
         name = name,
     )
