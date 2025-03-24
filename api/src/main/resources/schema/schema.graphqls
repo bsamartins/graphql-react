@@ -13,6 +13,7 @@ type Movie @connection {
   id: Int!
   name: String!
   cast: [Cast!]!
+  posterUrl: String
 }
 
 type Actor @connection {

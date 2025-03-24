@@ -10,6 +10,8 @@ import io.bsamartins.sandbox.graphql.codegen.types.Actor
 import io.bsamartins.sandbox.graphql.codegen.types.Cast
 import io.bsamartins.sandbox.graphql.codegen.types.Movie
 import io.bsamartins.sandbox.graphql.data.MovieService
+import io.bsamartins.sandbox.graphql.graphql.dataloaders.MoviePosterDataLoader
+import java.util.concurrent.CompletableFuture
 import io.bsamartins.sandbox.graphql.data.Movie as MovieData
 
 @DgsComponent
@@ -37,6 +39,13 @@ class MoviesDataFetcher(
                     character = it.character,
                 )
             }
+    }
+
+    @DgsData(parentType = "Movie", field = "posterUrl")
+    fun moviePoster(env: DataFetchingEnvironment): CompletableFuture<String?> {
+        val movie = env.getSource<Movie>()!!
+        return MoviePosterDataLoader.get(env)
+            .load(movie.id)
     }
 }
 

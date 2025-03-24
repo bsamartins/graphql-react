@@ -18,22 +18,50 @@ data class ConfigurationResponse(
     )
 }
 
+data class MovieImagesResponse(
+    val id: Int,
+    val backdrops: List<Image>,
+    val logos: List<Image>,
+    val posters: List<Image>,
+)
+
 data class PersonImagesResponse(
     val id: Int,
-    val profiles: List<Profile>,
+    val profiles: List<Image>,
+)
+
+data class Image(
+    @JsonProperty("aspect_ratio")
+    val aspectRatio: Long,
+    val height: Int,
+    val width: Int,
+    @JsonProperty("iso_639_1")
+    val iso6391: String?,
+    @JsonProperty("file_path")
+    val filePath: String,
+    @JsonProperty("vote_average")
+    val voteAverage: Long,
+    @JsonProperty("vote_count")
+    val voteCount: Long,
+)
+
+enum class ProfilePictureSize(
+    val size: String
 ) {
-    data class Profile(
-        @JsonProperty("aspect_ratio")
-        val aspectRatio: Long,
-        val height: Int,
-        val width: Int,
-        @JsonProperty("iso_639_1")
-        val iso6391: Int,
-        @JsonProperty("file_path")
-        val filePath: String,
-        @JsonProperty("vote_average")
-        val voteAverage: Long,
-        @JsonProperty("vote_count")
-        val voteCount: Long,
-    )
+    SMALL("w45"),
+    MEDIUM("w185"),
+    LARGE("h632"),
+    ORIGINAL("original")
+}
+
+enum class PosterSize(
+    val size: String
+) {
+    XS("w92"),
+    S("w154"),
+    M("w185"),
+    L("w342"),
+    XL("w500"),
+    XXL("w780"),
+    ORIGINAL("original")
 }

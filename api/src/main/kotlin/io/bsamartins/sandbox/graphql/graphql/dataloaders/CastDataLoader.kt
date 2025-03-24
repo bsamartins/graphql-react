@@ -16,7 +16,7 @@ class CastDataLoader(
 ) : MappedBatchLoaderWithContext<Int, List<Int>> {
 
     companion object {
-        fun get(env: DataFetchingEnvironment): DataLoader<Long, List<Long>> = env.getDataLoader("cast")!!
+        fun get(env: DataFetchingEnvironment): DataLoader<Int, List<Long>> = env.getDataLoader("cast")!!
     }
 
     private val logger = KotlinLogging.logger {}
