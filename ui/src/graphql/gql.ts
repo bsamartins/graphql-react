@@ -18,6 +18,7 @@ export const LIST_MOVIES = gql(`
         node {
           id
           name
+          posterUrl
           cast {
             ...Cast
           }          

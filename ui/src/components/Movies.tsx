@@ -1,5 +1,5 @@
 import CastMembers from "./CastMembers";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useDebounce} from "use-debounce";
 import {useQueryParam} from "../hooks";
 import {ListMoviesQuery, QueryMoviesArgs, useListMoviesQuery} from "../_generated__/graphql/gql";
@@ -101,14 +101,25 @@ export default function Movies() {
                     let edged = edge!!;
                     let movie = edged.node!!;
                     return (
-                        <div>
-                            <div key={movie.id}>{movie.name}</div>
-                            <div><small>{movie.id} / {edged.cursor}</small></div>
-                            <CastMembers cast={movie.cast}/>
+                        <div style={{display: "flex"}}>
+                            <div>
+                                <MoviePoster src={movie.posterUrl} />
+                            </div>
+                            <div>
+                                <div key={movie.id}>{movie.name}</div>
+                                <div><small>{movie.id} / {edged.cursor}</small></div>
+                                <CastMembers cast={movie.cast}/>
+                            </div>
                         </div>
                     )
                 })}
             </div>
         </div>
+    );
+}
+
+const MoviePoster: React.FC<{ src?: string | null }> = ({ src }) => {
+    return (
+        src ? <img src={src}/> : <></>
     );
 }
