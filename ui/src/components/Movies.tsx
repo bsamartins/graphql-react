@@ -105,7 +105,7 @@ export default function Movies() {
                             <div>
                                 <MoviePoster src={movie.posterUrl} />
                             </div>
-                            <div>
+                            <div style={{ marginLeft: "5px" }}>
                                 <div key={movie.id}>{movie.name}</div>
                                 <div><small>{movie.id} / {edged.cursor}</small></div>
                                 <CastMembers cast={movie.cast}/>
@@ -119,7 +119,18 @@ export default function Movies() {
 }
 
 const MoviePoster: React.FC<{ src?: string | null }> = ({ src }) => {
+    let [failed, setFailed] = useState(false);
     return (
-        src ? <img src={src}/> : <></>
+        (src && !failed) ?
+            <img
+                src={src}
+                onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    // Set image here
+                    e.currentTarget.src = "";
+                    setFailed(true);
+                }}
+            />
+            : <>// No Image //</>
     );
 }
