@@ -3,19 +3,9 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {
-    ApolloClient,
-    ApolloLink,
-    ApolloProvider, FetchResult,
-    from,
-    HttpLink,
-    HttpOptions,
-    InMemoryCache, Observable,
-    split
-} from "@apollo/client";
-import {BatchHttpLink} from "@apollo/client/link/batch-http";
-import {onError} from "@apollo/client/link/error";
+import { ApolloProvider } from "@apollo/client";
 import {client} from "./graphql/apollo";
+import { Provider as ThemeProvider } from "./theme";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -24,7 +14,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
       <ApolloProvider client={client}>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </ApolloProvider>
   </React.StrictMode>
 );
