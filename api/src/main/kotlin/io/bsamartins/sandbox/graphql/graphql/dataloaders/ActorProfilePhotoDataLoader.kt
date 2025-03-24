@@ -28,7 +28,7 @@ class ActorProfilePhotoDataLoader(
             logger.info { "Loading actor photos" }
             keys.map { actorId ->
                 try {
-                    tmdbClient.personProfilePictures(actorId, ProfilePictureSize.SMALL).firstOrNull()
+                    tmdbClient.personProfilePictures(actorId, ProfilePictureSize.SMALL)?.firstOrNull()
                 } catch (e: Exception) {
                     logger.warn(e) { "Unable to retrieve photo" }
                     null

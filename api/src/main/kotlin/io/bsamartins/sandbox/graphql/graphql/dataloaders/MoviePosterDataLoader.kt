@@ -27,7 +27,7 @@ class MoviePosterDataLoader(
             logger.info { "Loading movie posters" }
             keys.map { movieId ->
                 try {
-                    tmdbClient.moviePosters(movieId, PosterSize.M).firstOrNull()
+                    tmdbClient.moviePosters(movieId, PosterSize.M)?.firstOrNull()
                 } catch (e: Exception) {
                     logger.warn(e) { "Unable to retrieve poster" }
                     null

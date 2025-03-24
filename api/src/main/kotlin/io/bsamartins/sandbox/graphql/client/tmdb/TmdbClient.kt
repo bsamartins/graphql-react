@@ -6,6 +6,7 @@ import jakarta.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
+import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.body
 
@@ -27,34 +28,43 @@ class TmdbClient(
             .body<ConfigurationResponse>()!!
     }
 
-    fun movieImages(id: Int, languages: Set<String?>? = null): MovieImagesResponse {
-        return restClient.get()
-            .uri(MOVIE_IMAGES_URL) { uri ->
-                uri.apply {
-                    languages?.also {  queryParam("include_image_language", it) }
-                }.build(id)
-            }
-            .retrieve()
-            .body()!!
+    fun movieImages(id: Int, languages: Set<String?>? = null): MovieImagesResponse? {
+        return try {
+            restClient.get()
+                .uri(MOVIE_IMAGES_URL) { uri ->
+                    uri.apply {
+                        languages?.also {  queryParam("include_image_language", it) }
+                    }.build(id)
+                }
+                .retrieve()
+                .body()
+        } catch (e: HttpClientErrorException.NotFound) {
+            null
+        }
     }
 
-    fun moviePosters(id: Int, size: PosterSize): List<String> {
+    fun moviePosters(id: Int, size: PosterSize): List<String>? {
         return movieImages(id, setOf("en"))
-            .posters
-            .map { poster -> buildImageUrl(size.size, poster.filePath) }
+            ?.posters
+            ?.map { poster -> buildImageUrl(size.size, poster.filePath) }
+            ?: emptyList()
     }
 
-    fun personImages(id: Int): PersonImagesResponse {
-        return restClient.get()
-            .uri(PERSON_IMAGES_URL, id)
-            .retrieve()
-            .body()!!
+    fun personImages(id: Int): PersonImagesResponse? {
+        return try {
+            restClient.get()
+                .uri(PERSON_IMAGES_URL, id)
+                .retrieve()
+                .body()!!
+        } catch (e: HttpClientErrorException.NotFound) {
+            null
+        }
     }
 
-    fun personProfilePictures(id: Int, size: ProfilePictureSize): List<String> {
+    fun personProfilePictures(id: Int, size: ProfilePictureSize): List<String>? {
         return personImages(id)
-            .profiles
-            .map { profile -> buildImageUrl(size.size, profile.filePath) }
+            ?.profiles
+            ?.map { profile -> buildImageUrl(size.size, profile.filePath) }
     }
 
     private fun buildImageUrl(size: String, path: String): String =
