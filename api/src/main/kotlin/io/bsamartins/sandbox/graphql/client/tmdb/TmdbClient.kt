@@ -4,6 +4,7 @@ import io.bsamartins.sandbox.graphql.data.MovieRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
 import org.springframework.web.client.HttpClientErrorException
@@ -43,6 +44,7 @@ class TmdbClient(
         }
     }
 
+    @Cacheable("movie-posters")
     fun moviePosters(id: Int, size: PosterSize): List<String>? {
         return movieImages(id, setOf("en"))
             ?.posters
@@ -61,6 +63,7 @@ class TmdbClient(
         }
     }
 
+    @Cacheable("person-profile-pictures")
     fun personProfilePictures(id: Int, size: ProfilePictureSize): List<String>? {
         return personImages(id)
             ?.profiles
