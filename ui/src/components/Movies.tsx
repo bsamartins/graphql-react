@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {useDebounce} from "use-debounce";
 import {useQueryParam} from "../hooks";
 import {ListMoviesQuery, QueryMoviesArgs, useListMoviesQuery} from "../_generated__/graphql/gql";
-import {Box, Button, Card, CardContent, CardMedia, Input, Typography} from "@mui/material";
+import {Box, Button, Card, CardContent, CardMedia, TextField, Typography} from "@mui/material";
 
 const PAGE_SIZE = 10;
 
@@ -44,7 +44,6 @@ export default function Movies() {
         setLastParam(null);
     }, [queryDebounced]);
 
-    if (loading) return <>'Loading...'</>;
     if (error) return <>`Error! ${error.message}`</>;
     let hasNextPage = data?.movies?.pageInfo?.hasNextPage ?? false;
     let hasPreviousPage = data?.movies?.pageInfo?.hasPreviousPage ?? false;
@@ -85,19 +84,21 @@ export default function Movies() {
 
     return (
         <div>
-            <div>
-                <Input
-                    type="text"
+            <Box sx={{ display: "flex" }}>
+                <TextField
+                    variant="outlined"
+                    size="small"
                     value={queryInput}
                     onChange={(event) => {
                         const value = event.target.value;
                         setQueryInput(value);
                     }}
+                    disabled={loading}
                 />
-            </div>
-            <Button onClick={onClickPreviousPage} disabled={!hasPreviousPage}>Previous</Button>
-            <Button onClick={onClickNextPage} disabled={!hasNextPage}>Next</Button>
-            <div>
+                <Button onClick={onClickPreviousPage} disabled={!hasPreviousPage || loading}>Previous</Button>
+                <Button onClick={onClickNextPage} disabled={!hasNextPage || loading}>Next</Button>
+            </Box>
+            <Box>
                 {data?.movies?.edges?.map(edge => {
                     let edged = edge!!;
                     let movie = edged.node!!;
@@ -117,7 +118,7 @@ export default function Movies() {
                         </Card>
                     )
                 })}
-            </div>
+            </Box>
         </div>
     );
 }
