@@ -5,7 +5,8 @@ export const CAST_FRAGMENT = gql(`
     character
     actor {
       id
-      name            
+      name       
+      profilePhotoUrl     
     }
   }
 `);

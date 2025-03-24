@@ -7,8 +7,11 @@ import graphql.relay.Connection
 import graphql.schema.DataFetchingEnvironment
 import io.bsamartins.sandbox.graphql.codegen.types.Actor
 import io.bsamartins.sandbox.graphql.codegen.types.Cast
+import io.bsamartins.sandbox.graphql.codegen.types.Movie
 import io.bsamartins.sandbox.graphql.data.ActorService
 import io.bsamartins.sandbox.graphql.graphql.dataloaders.ActorDataLoader
+import io.bsamartins.sandbox.graphql.graphql.dataloaders.ActorProfilePhotoDataLoader
+import io.bsamartins.sandbox.graphql.graphql.dataloaders.MoviePosterDataLoader
 import java.util.concurrent.CompletableFuture
 import io.bsamartins.sandbox.graphql.data.Actor as ActorData
 
@@ -27,6 +30,13 @@ class ActorsDataFetcher(
         val actorDataLoader = ActorDataLoader.get(env)
         val cast = env.getSource<Cast>()!!
         return actorDataLoader.load(cast.actor.id)
+    }
+
+    @DgsData(parentType = "Actor", field = "profilePhotoUrl")
+    fun profileImageUrl(env: DataFetchingEnvironment): CompletableFuture<String?> {
+        val actor = env.getSource<Actor>()!!
+        return ActorProfilePhotoDataLoader.get(env)
+            .load(actor.id)
     }
 }
 

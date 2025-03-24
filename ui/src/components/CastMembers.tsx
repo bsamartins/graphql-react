@@ -17,7 +17,21 @@ export const CastMembers: React.FC<Props> = ({ cast }) => {
         >
             {cast.map(casting => (
                 <li key={casting.actor.id}>
-                    {casting.actor.name} <small>{casting.character}</small>
+                    <div>
+                        {
+                            casting.actor.profilePhotoUrl &&
+                                <img src={casting.actor.profilePhotoUrl}
+                                     style = {{
+                                         borderRadius: "100%",
+                                         width: "50px",
+                                         height: "50px",
+                                         objectFit: "cover"
+                                     }}
+                                />
+                        }
+                    </div>
+                    <div>{casting.character}</div>
+                    <div>{casting.actor.name}</div>
                 </li>
             ))}
         </ul>

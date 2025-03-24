@@ -22,6 +22,7 @@ export type Actor = {
   __typename?: 'Actor';
   id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
+  profilePhotoUrl?: Maybe<Scalars['String']['output']>;
 };
 
 /** Actor Connection */
@@ -347,7 +348,7 @@ export type _Service = {
   sdl: Scalars['String']['output'];
 };
 
-export type CastFragment = { __typename?: 'Cast', character: string, actor: { __typename?: 'Actor', id: number, name: string } };
+export type CastFragment = { __typename?: 'Cast', character: string, actor: { __typename?: 'Actor', id: number, name: string, profilePhotoUrl?: string | null } };
 
 export type ListMoviesQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -358,7 +359,7 @@ export type ListMoviesQueryVariables = Exact<{
 }>;
 
 
-export type ListMoviesQuery = { __typename?: 'Query', movies: { __typename?: 'MovieConnection', edges?: Array<{ __typename?: 'MovieEdge', cursor?: string | null, node?: { __typename?: 'Movie', id: number, title: string, posterUrl?: string | null, cast: Array<{ __typename?: 'Cast', character: string, actor: { __typename?: 'Actor', id: number, name: string } }> } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
+export type ListMoviesQuery = { __typename?: 'Query', movies: { __typename?: 'MovieConnection', edges?: Array<{ __typename?: 'MovieEdge', cursor?: string | null, node?: { __typename?: 'Movie', id: number, title: string, posterUrl?: string | null, cast: Array<{ __typename?: 'Cast', character: string, actor: { __typename?: 'Actor', id: number, name: string, profilePhotoUrl?: string | null } }> } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 export const CastFragmentDoc = gql`
     fragment Cast on Cast {
@@ -366,6 +367,7 @@ export const CastFragmentDoc = gql`
   actor {
     id
     name
+    profilePhotoUrl
   }
 }
     `;

@@ -19,6 +19,7 @@ type Movie @connection {
 type Actor @connection {
   id: Int!
   name: String!
+  profilePhotoUrl: String
 }
 
 type Cast {
