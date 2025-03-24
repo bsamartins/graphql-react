@@ -1,15 +1,11 @@
 import React from "react";
-import {ChakraProvider, createSystem, defaultBaseConfig} from "@chakra-ui/react";
-import {ThemeProvider} from "@emotion/react";
-
-export const system = createSystem(defaultBaseConfig, {});
+import {ThemeProvider, useTheme} from "@mui/material";
 
 export function Provider(props: { children: React.ReactNode }) {
+    const theme = useTheme();
     return (
-        <ChakraProvider value={system}>
-            <ThemeProvider theme={{}}>
-                {props.children}
-            </ThemeProvider>
-        </ChakraProvider>
+        <ThemeProvider theme={theme}>
+            {props.children}
+        </ThemeProvider>
     )
 }

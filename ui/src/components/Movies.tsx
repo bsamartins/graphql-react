@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {useDebounce} from "use-debounce";
 import {useQueryParam} from "../hooks";
 import {ListMoviesQuery, QueryMoviesArgs, useListMoviesQuery} from "../_generated__/graphql/gql";
+import {Box, Button, Card, CardContent, CardMedia, Input, Typography} from "@mui/material";
 
 const PAGE_SIZE = 10;
 
@@ -85,8 +86,9 @@ export default function Movies() {
     return (
         <div>
             <div>
-                <input
+                <Input
                     type="text"
+
                     value={queryInput}
                     onChange={(event) => {
                         const value = event.target.value;
@@ -94,23 +96,26 @@ export default function Movies() {
                     }}
                 />
             </div>
-            <button onClick={onClickPreviousPage} disabled={!hasPreviousPage}>Previous</button>
-            <button onClick={onClickNextPage} disabled={!hasNextPage}>Next</button>
+            <Button onClick={onClickPreviousPage} disabled={!hasPreviousPage}>Previous</Button>
+            <Button onClick={onClickNextPage} disabled={!hasNextPage}>Next</Button>
             <div>
                 {data?.movies?.edges?.map(edge => {
                     let edged = edge!!;
                     let movie = edged.node!!;
                     return (
-                        <div style={{display: "flex"}}>
-                            <div>
-                                <MoviePoster src={movie.posterUrl} />
-                            </div>
-                            <div style={{ marginLeft: "20px" }}>
-                                <h2 key={movie.id}>{movie.title}</h2>
-                                <div><small>{movie.id} / {edged.cursor}</small></div>
-                                <CastMembers cast={movie.cast}/>
-                            </div>
-                        </div>
+                        <Card sx={{ display: "flex" }}>
+                            <CardMedia>
+                                <MoviePoster src={movie.posterUrl}/>
+                            </CardMedia>
+                            <Box>
+                                <CardContent>
+                                    <Typography component="div" variant="h5">{movie.title}</Typography>
+                                </CardContent>
+                                <Box>
+                                    <CastMembers cast={movie.cast}/>
+                                </Box>
+                            </Box>
+                        </Card>
                     )
                 })}
             </div>
