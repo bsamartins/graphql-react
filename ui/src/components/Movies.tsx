@@ -1,7 +1,6 @@
 import CastMembers from "./CastMembers";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useDebounce} from "use-debounce";
-import {useQueryParam} from "../hooks";
 import {CastFragment, ListMoviesQuery, QueryMoviesArgs, useListMoviesQuery} from "../_generated__/graphql/gql";
 import {Box, Button, Card, CardContent, CardMedia, TextField, Typography} from "@mui/material";
 
@@ -10,25 +9,9 @@ const PAGE_SIZE = 10;
 export default function Movies() {
     const [queryInput, setQueryInput] = useState<string>("");
     const [queryDebounced] = useDebounce(queryInput, 500);
-    const [queryParam, setQueryParam] = useQueryParam("query");
-    const [lastParam, setLastParam] = useQueryParam("last");
-    const [firstParam, setFirstParam] = useQueryParam("first");
-
-    let queryParams: QueryMoviesArgs;
-    // if (firstParam) {
-    //     queryParams = {
-    //         last: PAGE_SIZE,
-    //         before: firstParam,
-    //     };
-    // } else {
-        queryParams = {
-            first: PAGE_SIZE,
-            // after: lastParam,
-        }
-    // }
 
     let variables: QueryMoviesArgs = {
-        ...queryParams,
+        first: PAGE_SIZE,
         query: queryDebounced ? queryDebounced : null
     }
 
@@ -37,31 +20,9 @@ export default function Movies() {
         notifyOnNetworkStatusChange: true,
     });
 
-    useEffect(() => {
-        setQueryInput(queryParam ?? "");
-    }, []);
-
-    useEffect(() => {
-        setQueryParam(queryDebounced);
-        setFirstParam(null);
-        setLastParam(null);
-    }, [queryDebounced]);
-
     let hasNextPage = data?.movies?.pageInfo?.hasNextPage ?? false;
     let hasPreviousPage = data?.movies?.pageInfo?.hasPreviousPage ?? false;
     let replaceResults = (previous: ListMoviesQuery, fetchedResults: ListMoviesQuery | null | undefined, isNext: boolean) => {
-        let afterCursor = fetchedResults?.movies?.pageInfo?.endCursor ??
-            fetchedResults?.movies?.pageInfo?.endCursor;
-        let beforeCursor = fetchedResults?.movies?.pageInfo?.startCursor ??
-            fetchedResults?.movies?.pageInfo?.startCursor;
-
-        if (isNext) {
-            setLastParam(afterCursor);
-            setFirstParam(null);
-        } else {
-            setLastParam(null);
-            setFirstParam(beforeCursor);
-        }
         return fetchedResults ?? previous;
     }
     let onClickNextPage = async () => {
