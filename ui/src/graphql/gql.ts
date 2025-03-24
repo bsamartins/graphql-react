@@ -17,7 +17,7 @@ export const LIST_MOVIES = gql(`
         cursor
         node {
           id
-          name
+          title
           posterUrl
           cast {
             ...Cast

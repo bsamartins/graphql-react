@@ -52,6 +52,6 @@ class MoviesDataFetcher(
 private fun MovieData.toModel(): Movie =
     Movie(
         id = id,
-        name = title,
+        title = title,
         cast = emptyList()
     )

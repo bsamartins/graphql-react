@@ -291,8 +291,8 @@ export type Movie = {
   __typename?: 'Movie';
   cast: Array<Cast>;
   id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
   posterUrl?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
 };
 
 /** Movie Connection */
@@ -358,7 +358,7 @@ export type ListMoviesQueryVariables = Exact<{
 }>;
 
 
-export type ListMoviesQuery = { __typename?: 'Query', movies: { __typename?: 'MovieConnection', edges?: Array<{ __typename?: 'MovieEdge', cursor?: string | null, node?: { __typename?: 'Movie', id: number, name: string, posterUrl?: string | null, cast: Array<{ __typename?: 'Cast', character: string, actor: { __typename?: 'Actor', id: number, name: string } }> } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
+export type ListMoviesQuery = { __typename?: 'Query', movies: { __typename?: 'MovieConnection', edges?: Array<{ __typename?: 'MovieEdge', cursor?: string | null, node?: { __typename?: 'Movie', id: number, title: string, posterUrl?: string | null, cast: Array<{ __typename?: 'Cast', character: string, actor: { __typename?: 'Actor', id: number, name: string } }> } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 export const CastFragmentDoc = gql`
     fragment Cast on Cast {
@@ -382,7 +382,7 @@ export const ListMoviesDocument = gql`
       cursor
       node {
         id
-        name
+        title
         posterUrl
         cast {
           ...Cast

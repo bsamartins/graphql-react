@@ -106,7 +106,7 @@ export default function Movies() {
                                 <MoviePoster src={movie.posterUrl} />
                             </div>
                             <div style={{ marginLeft: "20px" }}>
-                                <h2 key={movie.id}>{movie.name}</h2>
+                                <h2 key={movie.id}>{movie.title}</h2>
                                 <div><small>{movie.id} / {edged.cursor}</small></div>
                                 <CastMembers cast={movie.cast}/>
                             </div>

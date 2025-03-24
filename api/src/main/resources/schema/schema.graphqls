@@ -11,7 +11,7 @@ type Query {
 
 type Movie @connection {
   id: Int!
-  name: String!
+  title: String!
   cast: [Cast!]!
   posterUrl: String
 }
