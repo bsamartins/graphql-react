@@ -11,6 +11,10 @@ data class ConfigurationResponse(
         val baseUrl: String,
         @JsonProperty("secure_base_url")
         val secureBaseUrl: String,
+        @JsonProperty("poster_sizes")
+        val posterSizes: Set<String>,
+        @JsonProperty("profile_sizes")
+        val profileSizes: Set<String>,
     )
 }
 

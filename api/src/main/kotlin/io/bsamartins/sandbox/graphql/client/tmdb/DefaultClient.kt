@@ -1,6 +1,5 @@
 package io.bsamartins.sandbox.graphql.client.tmdb
 
-import io.bsamartins.sandbox.graphql.data.ActorRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Value
@@ -12,7 +11,6 @@ import org.springframework.web.client.body
 @Service
 class DefaultClient(
     @Value("\${tmdb.api-key}") private val apiKey: String,
-    private val actorRepository: ActorRepository,
 ) {
     private val logger = KotlinLogging.logger {}
 
