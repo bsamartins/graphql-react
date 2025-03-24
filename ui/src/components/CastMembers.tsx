@@ -1,5 +1,6 @@
 import React from "react";
 import {CastFragment} from "../_generated__/graphql/gql";
+import {Box, Card, CardContent, CardMedia, Typography} from "@mui/material";
 
 interface Props {
     cast: CastFragment[];
@@ -7,34 +8,24 @@ interface Props {
 
 export const CastMembers: React.FC<Props> = ({ cast }) => {
     return (
-        <ul
+        <Box
             style={{
                 display: "flex",
-                listStyle: "none",
                 overflow: "scroll",
-                width: "stretch",
             }}
         >
             {cast.map(casting => (
-                <li key={casting.actor.id}>
-                    <div>
-                        {
-                            casting.actor.profilePhotoUrl &&
-                                <img src={casting.actor.profilePhotoUrl}
-                                     style = {{
-                                         borderRadius: "100%",
-                                         width: "50px",
-                                         height: "50px",
-                                         objectFit: "cover"
-                                     }}
-                                />
-                        }
-                    </div>
-                    <div>{casting.character}</div>
-                    <div>{casting.actor.name}</div>
-                </li>
+                <Card key={casting.actor.id} style={{ width: "200px", marginLeft: "10px", marginBottom: "10px" }}>
+                    <CardMedia image={casting.actor.profilePhotoUrl!!} sx={{ height: 140 }}/>
+                    <CardContent>
+                        <Typography variant="subtitle2">{casting.actor.name}</Typography>
+                        <Typography variant="body2" sx={ (theme) => ({
+                            color: theme.palette.grey["500"]
+                        })}>{casting.character}</Typography>
+                    </CardContent>
+                </Card>
             ))}
-        </ul>
+        </Box>
     );
 }
 

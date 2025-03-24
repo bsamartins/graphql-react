@@ -121,7 +121,7 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => (
-    <Card sx={{ display: "flex" }}>
+    <Card key={movie.id} sx={{ display: "flex" }}>
         <CardMedia>
             <MoviePoster src={movie.posterUrl}/>
         </CardMedia>
