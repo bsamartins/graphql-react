@@ -98,7 +98,7 @@ export default function Movies() {
                 <Button onClick={onClickPreviousPage} disabled={!hasPreviousPage || loading}>Previous</Button>
                 <Button onClick={onClickNextPage} disabled={!hasNextPage || loading}>Next</Button>
             </Box>
-            <Box>
+            <Box sx={{ marginTop: "10px" }}>
                 {data?.movies?.edges?.map(edge => {
                     let edged = edge!!;
                     let movie = edged.node!!;
@@ -121,7 +121,14 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => (
-    <Card key={movie.id} sx={{ display: "flex" }}>
+    <Card key={movie.id}
+          sx={{
+              display: "flex",
+              // "not::first-of-type": {
+                  marginBottom: "10px",
+              // },
+          }}
+        >
         <CardMedia>
             <MoviePoster src={movie.posterUrl}/>
         </CardMedia>
