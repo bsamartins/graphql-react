@@ -66,7 +66,7 @@ export default function Movies() {
                     let edged = edge!!;
                     let movie = edged.node!!;
                     return (
-                        <MovieCard movie={movie} />
+                        <MovieCard key={movie.id} movie={movie} />
                     )
                 })}
             </Box>
