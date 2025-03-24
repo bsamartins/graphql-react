@@ -2,7 +2,7 @@ import CastMembers from "./CastMembers";
 import React, {useEffect, useState} from "react";
 import {useDebounce} from "use-debounce";
 import {useQueryParam} from "../hooks";
-import {ListMoviesQuery, QueryMoviesArgs, useListMoviesQuery} from "../_generated__/graphql/gql";
+import {CastFragment, ListMoviesQuery, QueryMoviesArgs, useListMoviesQuery} from "../_generated__/graphql/gql";
 import {Box, Button, Card, CardContent, CardMedia, TextField, Typography} from "@mui/material";
 
 const PAGE_SIZE = 10;
@@ -103,25 +103,38 @@ export default function Movies() {
                     let edged = edge!!;
                     let movie = edged.node!!;
                     return (
-                        <Card sx={{ display: "flex" }}>
-                            <CardMedia>
-                                <MoviePoster src={movie.posterUrl}/>
-                            </CardMedia>
-                            <Box>
-                                <CardContent>
-                                    <Typography component="div" variant="h5">{movie.title}</Typography>
-                                </CardContent>
-                                <Box>
-                                    <CastMembers cast={movie.cast}/>
-                                </Box>
-                            </Box>
-                        </Card>
+                        <MovieCard movie={movie} />
                     )
                 })}
             </Box>
         </div>
     );
 }
+
+interface MovieCardProps {
+    movie: {
+        id: number;
+        title: string;
+        posterUrl?: string | null;
+        cast: CastFragment[];
+    };
+}
+
+const MovieCard: React.FC<MovieCardProps> = ({ movie }) => (
+    <Card sx={{ display: "flex" }}>
+        <CardMedia>
+            <MoviePoster src={movie.posterUrl}/>
+        </CardMedia>
+        <Box>
+            <CardContent>
+                <Typography component="div" variant="h5">{movie.title}</Typography>
+            </CardContent>
+            <Box>
+                <CastMembers cast={movie.cast}/>
+            </Box>
+        </Box>
+    </Card>
+)
 
 const MoviePoster: React.FC<{ src?: string | null }> = ({ src }) => {
     let [failed, setFailed] = useState(false);
