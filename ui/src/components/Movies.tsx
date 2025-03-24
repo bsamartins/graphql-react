@@ -88,7 +88,6 @@ export default function Movies() {
             <div>
                 <Input
                     type="text"
-
                     value={queryInput}
                     onChange={(event) => {
                         const value = event.target.value;
