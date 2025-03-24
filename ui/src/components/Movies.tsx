@@ -32,7 +32,10 @@ export default function Movies() {
         query: queryDebounced ? queryDebounced : null
     }
 
-    const { loading, error, data, fetchMore } = useListMoviesQuery({variables});
+    const { loading, data, fetchMore } = useListMoviesQuery({
+        variables,
+        notifyOnNetworkStatusChange: true,
+    });
 
     useEffect(() => {
         setQueryInput(queryParam ?? "");
@@ -44,7 +47,6 @@ export default function Movies() {
         setLastParam(null);
     }, [queryDebounced]);
 
-    if (error) return <>`Error! ${error.message}`</>;
     let hasNextPage = data?.movies?.pageInfo?.hasNextPage ?? false;
     let hasPreviousPage = data?.movies?.pageInfo?.hasPreviousPage ?? false;
     let replaceResults = (previous: ListMoviesQuery, fetchedResults: ListMoviesQuery | null | undefined, isNext: boolean) => {
@@ -78,7 +80,7 @@ export default function Movies() {
                 before: data?.movies?.pageInfo?.startCursor,
                 after: null,
             },
-            updateQuery: (previousResult, { fetchMoreResult }) => replaceResults(previousResult, fetchMoreResult, false),
+            updateQuery: (previousResult, {fetchMoreResult}) => replaceResults(previousResult, fetchMoreResult, false),
         });
     }
 
@@ -124,9 +126,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => (
     <Card key={movie.id}
           sx={{
               display: "flex",
-              // "not::first-of-type": {
-                  marginBottom: "10px",
-              // },
+              marginBottom: "10px",
           }}
         >
         <CardMedia>
