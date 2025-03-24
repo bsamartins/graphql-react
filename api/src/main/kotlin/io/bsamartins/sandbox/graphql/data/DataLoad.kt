@@ -17,8 +17,8 @@ import java.util.zip.ZipFile
 
 
 @Component
-@WebEndpoint(id = "load-data")
-class DataInitialization(
+@WebEndpoint(id = "data-load")
+class DataLoad(
     private val objectMapper: ObjectMapper,
     private val movieRepository: MovieRepository,
     private val actorRepository: ActorRepository,

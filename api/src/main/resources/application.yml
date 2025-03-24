@@ -19,7 +19,8 @@ management:
     web:
       exposure:
         include:
-          - load-data
+          - data-load
+          - data-index
 #  endpoint:
 #    shutdown:
 #      enabled=true:
