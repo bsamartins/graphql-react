@@ -7,9 +7,18 @@ interface Props {
 
 export const CastMembers: React.FC<Props> = ({ cast }) => {
     return (
-        <ul>
+        <ul
+            style={{
+                display: "flex",
+                listStyle: "none",
+                overflow: "scroll",
+                width: "stretch",
+            }}
+        >
             {cast.map(casting => (
-                <li key={casting.actor.id}>{casting.actor.name} <small>{casting.character}</small></li>
+                <li key={casting.actor.id}>
+                    {casting.actor.name} <small>{casting.character}</small>
+                </li>
             ))}
         </ul>
     );
