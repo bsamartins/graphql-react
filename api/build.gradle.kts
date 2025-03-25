@@ -29,6 +29,7 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv")
     runtimeOnly("org.xerial:sqlite-jdbc:3.49.1.0")
 
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 noArg {
@@ -40,4 +41,8 @@ tasks.named<GenerateJavaTask>("generateJava") {
     packageName = "io.bsamartins.sandbox.graphql.codegen"
     typeMapping["MovieConnection"] = "graphql.relay.SimpleListConnection<Movie>"
 
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }

@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: "jdbc:sqlite:"
+
+tmdb:
+  api-key: ""
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate: TRACE

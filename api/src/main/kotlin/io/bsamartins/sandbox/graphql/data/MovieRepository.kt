@@ -9,12 +9,20 @@ import org.hibernate.search.mapper.orm.Search
 import org.hibernate.search.mapper.orm.session.SearchSession
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed
+import org.springframework.data.domain.KeysetScrollPosition
+import org.springframework.data.domain.Window
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MovieRepository : JpaRepository<Movie, Int>, JpaSpecificationExecutor<Movie>, CustomMovieRepository
+interface MovieRepository : JpaRepository<Movie, Int>, JpaSpecificationExecutor<Movie>, CustomMovieRepository {
+    fun findFirst5ByOrderByTitle(position: KeysetScrollPosition): Window<Movie>
+
+//    @Query("select m from Movie m")
+//    fun findAll(position: KeysetScrollPosition): Window<Movie>
+}
 
 interface CustomMovieRepository {
     fun searchAll(query: String? = null): List<Movie>
@@ -51,4 +59,8 @@ class Movie(
 
     @FullTextField
     val title: String,
-)
+) {
+    override fun toString(): String {
+        return "Movie(id=$id, title='$title')"
+    }
+}
