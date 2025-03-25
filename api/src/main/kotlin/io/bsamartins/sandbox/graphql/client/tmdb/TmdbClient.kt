@@ -1,6 +1,6 @@
 package io.bsamartins.sandbox.graphql.client.tmdb
 
-import io.bsamartins.sandbox.graphql.data.MovieRepository
+import io.bsamartins.sandbox.graphql.modules.movies.MovieRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Value

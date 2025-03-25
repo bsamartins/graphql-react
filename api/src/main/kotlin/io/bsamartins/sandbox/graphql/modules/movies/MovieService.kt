@@ -1,5 +1,6 @@
-package io.bsamartins.sandbox.graphql.data
+package io.bsamartins.sandbox.graphql.modules.movies
 
+import io.bsamartins.sandbox.graphql.PageRequest
 import org.springframework.stereotype.Service
 
 @Service

@@ -7,13 +7,11 @@ import graphql.relay.Connection
 import graphql.schema.DataFetchingEnvironment
 import io.bsamartins.sandbox.graphql.codegen.types.Actor
 import io.bsamartins.sandbox.graphql.codegen.types.Cast
-import io.bsamartins.sandbox.graphql.codegen.types.Movie
-import io.bsamartins.sandbox.graphql.data.ActorService
+import io.bsamartins.sandbox.graphql.modules.actors.ActorService
 import io.bsamartins.sandbox.graphql.graphql.dataloaders.ActorDataLoader
 import io.bsamartins.sandbox.graphql.graphql.dataloaders.ActorProfilePhotoDataLoader
-import io.bsamartins.sandbox.graphql.graphql.dataloaders.MoviePosterDataLoader
 import java.util.concurrent.CompletableFuture
-import io.bsamartins.sandbox.graphql.data.Actor as ActorData
+import io.bsamartins.sandbox.graphql.modules.actors.Actor as ActorData
 
 
 @DgsComponent

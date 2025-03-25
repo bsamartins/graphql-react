@@ -1,4 +1,4 @@
-package io.bsamartins.sandbox.graphql.data
+package io.bsamartins.sandbox.graphql
 
 data class PageRequest(
     val first: Int?,

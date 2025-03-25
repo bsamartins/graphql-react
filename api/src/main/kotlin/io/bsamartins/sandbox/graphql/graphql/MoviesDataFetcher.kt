@@ -9,10 +9,10 @@ import graphql.schema.DataFetchingEnvironment
 import io.bsamartins.sandbox.graphql.codegen.types.Actor
 import io.bsamartins.sandbox.graphql.codegen.types.Cast
 import io.bsamartins.sandbox.graphql.codegen.types.Movie
-import io.bsamartins.sandbox.graphql.data.MovieService
+import io.bsamartins.sandbox.graphql.modules.movies.MovieService
 import io.bsamartins.sandbox.graphql.graphql.dataloaders.MoviePosterDataLoader
 import java.util.concurrent.CompletableFuture
-import io.bsamartins.sandbox.graphql.data.Movie as MovieData
+import io.bsamartins.sandbox.graphql.modules.movies.Movie as MovieData
 
 @DgsComponent
 class MoviesDataFetcher(

@@ -3,10 +3,7 @@ package io.bsamartins.sandbox.graphql.graphql
 import graphql.relay.Connection
 import graphql.relay.SimpleListConnection
 import graphql.schema.DataFetchingEnvironment
-import io.bsamartins.sandbox.graphql.data.PageRequest
-import org.dataloader.DataLoader
-import org.dataloader.MappedBatchLoader
-import kotlin.reflect.KClass
+import io.bsamartins.sandbox.graphql.PageRequest
 
 fun <T> List<T>.asConnection(env: DataFetchingEnvironment): Connection<T> = SimpleListConnection(this).get(env)
 

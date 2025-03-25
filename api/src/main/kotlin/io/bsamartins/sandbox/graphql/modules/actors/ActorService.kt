@@ -1,4 +1,4 @@
-package io.bsamartins.sandbox.graphql.data
+package io.bsamartins.sandbox.graphql.modules.actors
 
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service

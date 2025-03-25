@@ -3,7 +3,7 @@ package io.bsamartins.sandbox.graphql.graphql.dataloaders
 import com.netflix.graphql.dgs.DgsDataLoader
 import graphql.schema.DataFetchingEnvironment
 import io.bsamartins.sandbox.graphql.codegen.types.Actor
-import io.bsamartins.sandbox.graphql.data.ActorService
+import io.bsamartins.sandbox.graphql.modules.actors.ActorService
 import io.bsamartins.sandbox.graphql.graphql.toModel
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.dataloader.DataLoader

@@ -1,4 +1,4 @@
-package io.bsamartins.sandbox.graphql.data
+package io.bsamartins.sandbox.graphql.modules.movies
 
 import jakarta.persistence.Entity
 import jakarta.persistence.EntityManager
@@ -13,7 +13,6 @@ import org.springframework.data.domain.KeysetScrollPosition
 import org.springframework.data.domain.Window
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
-import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository

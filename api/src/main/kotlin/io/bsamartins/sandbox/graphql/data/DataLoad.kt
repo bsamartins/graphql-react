@@ -6,6 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.csv.CsvMapper
 import com.fasterxml.jackson.dataformat.csv.CsvParser
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.bsamartins.sandbox.graphql.modules.actors.Actor
+import io.bsamartins.sandbox.graphql.modules.actors.ActorRepository
+import io.bsamartins.sandbox.graphql.modules.movies.Movie
+import io.bsamartins.sandbox.graphql.modules.movies.MovieCast
+import io.bsamartins.sandbox.graphql.modules.movies.MovieCastRepository
+import io.bsamartins.sandbox.graphql.modules.movies.MovieRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.boot.actuate.endpoint.annotation.WriteOperation
 import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint

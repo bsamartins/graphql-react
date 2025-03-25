@@ -1,4 +1,4 @@
-package io.bsamartins.sandbox.graphql.data
+package io.bsamartins.sandbox.graphql.modules.actors
 
 import jakarta.persistence.Entity
 import jakarta.persistence.Id

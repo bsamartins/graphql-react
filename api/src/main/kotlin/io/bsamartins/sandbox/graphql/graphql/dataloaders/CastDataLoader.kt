@@ -2,7 +2,7 @@ package io.bsamartins.sandbox.graphql.graphql.dataloaders
 
 import com.netflix.graphql.dgs.DgsDataLoader
 import graphql.schema.DataFetchingEnvironment
-import io.bsamartins.sandbox.graphql.data.MovieCastRepository
+import io.bsamartins.sandbox.graphql.modules.movies.MovieCastRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.dataloader.BatchLoaderEnvironment
 import org.dataloader.DataLoader

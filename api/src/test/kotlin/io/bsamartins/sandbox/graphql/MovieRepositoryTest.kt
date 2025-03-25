@@ -1,7 +1,7 @@
 package io.bsamartins.sandbox.graphql
 
-import io.bsamartins.sandbox.graphql.data.Movie
-import io.bsamartins.sandbox.graphql.data.MovieRepository
+import io.bsamartins.sandbox.graphql.modules.movies.Movie
+import io.bsamartins.sandbox.graphql.modules.movies.MovieRepository
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
