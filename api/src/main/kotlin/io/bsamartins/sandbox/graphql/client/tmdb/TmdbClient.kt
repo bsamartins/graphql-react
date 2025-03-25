@@ -1,6 +1,5 @@
 package io.bsamartins.sandbox.graphql.client.tmdb
 
-import io.bsamartins.sandbox.graphql.modules.movies.MovieRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Value
@@ -12,10 +11,9 @@ import org.springframework.web.client.RestClient
 import org.springframework.web.client.body
 
 @Service
-class TmdbClient(
+class DefaultTmdbClient(
     @Value("\${tmdb.api-key}") private val apiKey: String,
-    private val movieRepository: MovieRepository,
-) {
+) : TmdbClient {
     private val logger = KotlinLogging.logger {}
 
     private val restClient = RestClient.builder()
@@ -29,7 +27,7 @@ class TmdbClient(
             .body<ConfigurationResponse>()!!
     }
 
-    fun movieImages(id: Int, languages: Set<String?>? = null): MovieImagesResponse? {
+    override fun movieImages(id: Int, languages: Set<String?>?): MovieImagesResponse? {
         return try {
             restClient.get()
                 .uri(MOVIE_IMAGES_URL) { uri ->
@@ -45,14 +43,14 @@ class TmdbClient(
     }
 
     @Cacheable("movie-posters")
-    fun moviePosters(id: Int, size: PosterSize): List<String>? {
+    override fun moviePosters(id: Int, size: PosterSize): List<String>? {
         return movieImages(id, setOf("en"))
             ?.posters
             ?.map { poster -> buildImageUrl(size.size, poster.filePath) }
             ?: emptyList()
     }
 
-    fun personImages(id: Int): PersonImagesResponse? {
+    override fun personImages(id: Int): PersonImagesResponse? {
         return try {
             restClient.get()
                 .uri(PERSON_IMAGES_URL, id)
@@ -64,7 +62,7 @@ class TmdbClient(
     }
 
     @Cacheable("person-profile-pictures")
-    fun personProfilePictures(id: Int, size: ProfilePictureSize): List<String>? {
+    override fun personProfilePictures(id: Int, size: ProfilePictureSize): List<String>? {
         return personImages(id)
             ?.profiles
             ?.map { profile -> buildImageUrl(size.size, profile.filePath) }
