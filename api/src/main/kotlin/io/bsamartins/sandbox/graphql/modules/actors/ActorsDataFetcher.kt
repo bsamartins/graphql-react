@@ -1,4 +1,4 @@
-package io.bsamartins.sandbox.graphql.graphql
+package io.bsamartins.sandbox.graphql.modules.actors
 
 import com.netflix.graphql.dgs.DgsComponent
 import com.netflix.graphql.dgs.DgsData
@@ -7,7 +7,7 @@ import graphql.relay.Connection
 import graphql.schema.DataFetchingEnvironment
 import io.bsamartins.sandbox.graphql.codegen.types.Actor
 import io.bsamartins.sandbox.graphql.codegen.types.Cast
-import io.bsamartins.sandbox.graphql.modules.actors.ActorService
+import io.bsamartins.sandbox.graphql.graphql.asConnection
 import io.bsamartins.sandbox.graphql.graphql.dataloaders.ActorDataLoader
 import io.bsamartins.sandbox.graphql.graphql.dataloaders.ActorProfilePhotoDataLoader
 import java.util.concurrent.CompletableFuture

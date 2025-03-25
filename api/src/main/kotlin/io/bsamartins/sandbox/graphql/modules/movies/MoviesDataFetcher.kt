@@ -1,4 +1,4 @@
-package io.bsamartins.sandbox.graphql.graphql
+package io.bsamartins.sandbox.graphql.modules.movies
 
 import com.netflix.graphql.dgs.DgsComponent
 import com.netflix.graphql.dgs.DgsData
@@ -9,10 +9,10 @@ import graphql.schema.DataFetchingEnvironment
 import io.bsamartins.sandbox.graphql.codegen.types.Actor
 import io.bsamartins.sandbox.graphql.codegen.types.Cast
 import io.bsamartins.sandbox.graphql.codegen.types.Movie
-import io.bsamartins.sandbox.graphql.modules.movies.MovieService
+import io.bsamartins.sandbox.graphql.graphql.asConnection
 import io.bsamartins.sandbox.graphql.graphql.dataloaders.MoviePosterDataLoader
+import io.bsamartins.sandbox.graphql.graphql.getPageRequest
 import java.util.concurrent.CompletableFuture
-import io.bsamartins.sandbox.graphql.modules.movies.Movie as MovieData
 
 @DgsComponent
 class MoviesDataFetcher(
@@ -49,7 +49,7 @@ class MoviesDataFetcher(
     }
 }
 
-private fun MovieData.toModel(): Movie =
+fun io.bsamartins.sandbox.graphql.modules.movies.Movie.toModel(): Movie =
     Movie(
         id = id,
         title = title,
