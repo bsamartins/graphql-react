@@ -4,12 +4,18 @@ import com.netflix.graphql.dgs.DgsComponent
 import com.netflix.graphql.dgs.DgsData
 import com.netflix.graphql.dgs.DgsQuery
 import graphql.relay.Connection
+import graphql.relay.DefaultConnection
+import graphql.relay.DefaultConnectionCursor
+import graphql.relay.DefaultEdge
+import graphql.relay.DefaultPageInfo
 import graphql.schema.DataFetchingEnvironment
 import io.bsamartins.sandbox.graphql.codegen.types.Actor
 import io.bsamartins.sandbox.graphql.codegen.types.Cast
-import io.bsamartins.sandbox.graphql.graphql.asConnection
 import io.bsamartins.sandbox.graphql.graphql.dataloaders.ActorDataLoader
 import io.bsamartins.sandbox.graphql.graphql.dataloaders.ActorProfilePhotoDataLoader
+import org.springframework.data.domain.ScrollPosition
+import org.springframework.data.domain.Window
+import java.util.Base64
 import java.util.concurrent.CompletableFuture
 import io.bsamartins.sandbox.graphql.modules.actors.Actor as ActorData
 
@@ -19,9 +25,9 @@ class ActorsDataFetcher(
     private val actorService: ActorService,
 ) {
     @DgsQuery
-    fun actors(env: DataFetchingEnvironment): Connection<Actor> = actorService.listAll()
+    fun actors(): Connection<Actor> = actorService.findWindow(ScrollPosition.keyset())
         .map { it.toModel() }
-        .asConnection(env)
+        .asConnection()
 
     @DgsData(parentType = "Cast", field = "actor")
     fun castActor(env: DataFetchingEnvironment): CompletableFuture<Actor> {
@@ -43,3 +49,15 @@ internal fun ActorData.toModel(): Actor =
         id = id,
         name = name,
     )
+
+fun <T> Window<T>.asConnection(): Connection<T> {
+    val edges = map { e ->
+        DefaultEdge(e, DefaultConnectionCursor(buildCursor()))
+    }.toList()
+    val pageInfo = DefaultPageInfo()
+    return DefaultConnection(edges, pageInfo)
+}
+
+fun buildCursor(): String {
+    return Base64.getEncoder().encodeToString("".toByteArray()).toString()
+}

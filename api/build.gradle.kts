@@ -30,6 +30,7 @@ dependencies {
     runtimeOnly("org.xerial:sqlite-jdbc:3.49.1.0")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("net.datafaker:datafaker:2.4.2")
 }
 
 noArg {
